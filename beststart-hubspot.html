@@ -1,0 +1,2769 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BestStart × HubSpot — A closer look</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ————— HubSpot Breeze palette ————— */
+  :root {
+    --hs-orange: #FF4800;
+    --hs-tangerine: #FFA581;
+    --hs-peach: #FBDED2;
+    --hs-fuchsia: #FB31A8;
+    --hs-rose: #FF9FCC;
+    --hs-blush: #FBDBE9;
+    --hs-magenta: #46062B;
+    --hs-lavender: #D6C2D9;
+    --hs-neutral: #141414;
+    --hs-cream: #F8F5EE;
+    --hs-white: #FFFFFF;
+
+    /* semantic */
+    --ink: #141414;
+    --ink-soft: #3a3a3a;
+    --ink-muted: #6b6b6b;
+    --ink-whisper: #a6a29a;
+    --surface: #F8F5EE;
+    --surface-warm: #FDFBF5;
+    --rule: rgba(20, 20, 20, 0.09);
+    --rule-soft: rgba(20, 20, 20, 0.06);
+
+    /* Breeze diagonal gradients (NEVER vertical per guidelines) */
+    --grad-light: linear-gradient(135deg, #FFA581 0%, #FBDED2 45%, #FBDBE9 100%);
+    --grad-energized: linear-gradient(135deg, #FF4800 0%, #FB31A8 50%, #FBDED2 100%);
+    --grad-whisper: linear-gradient(135deg, rgba(255,165,129,0.35) 0%, rgba(251,222,210,0.25) 50%, rgba(251,219,233,0.35) 100%);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Lexend Deca', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--surface);
+    color: var(--ink);
+    line-height: 1.55;
+    font-size: 16px;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .serif {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  /* ————— Layout scaffolding ————— */
+  .wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  @media (max-width: 720px) {
+    .wrap { padding: 0 24px; }
+  }
+
+  /* ————— Top navigation ————— */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(248, 245, 238, 0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--rule-soft);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+
+  .brand-mark {
+    width: 8px;
+    height: 8px;
+    background: var(--hs-orange);
+    border-radius: 50%;
+  }
+
+  .brand-x {
+    color: var(--ink-muted);
+    font-weight: 300;
+    margin: 0 2px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .nav-links a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.2s;
+    position: relative;
+  }
+
+  .nav-links a:hover { color: var(--hs-orange); }
+
+  @media (max-width: 860px) {
+    .nav-links { display: none; }
+    .nav-inner { padding: 16px 24px; }
+  }
+
+  /* ————— Hero ————— */
+  .hero {
+    padding: 140px 0 160px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    right: -200px;
+    width: 700px;
+    height: 700px;
+    background: var(--grad-light);
+    border-radius: 50%;
+    opacity: 0.55;
+    filter: blur(60px);
+    z-index: 0;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -150px;
+    left: -150px;
+    width: 400px;
+    height: 400px;
+    background: linear-gradient(135deg, rgba(251, 49, 168, 0.12) 0%, rgba(255, 159, 204, 0.08) 100%);
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: 0;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 780px;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    padding: 7px 14px;
+    border: 1px solid var(--hs-orange);
+    color: var(--hs-orange);
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 36px;
+  }
+
+  h1.display {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 200;
+    font-size: clamp(48px, 7vw, 92px);
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+    margin-bottom: 28px;
+  }
+
+  h1.display em {
+    font-style: normal;
+    font-weight: 300;
+    color: var(--hs-orange);
+  }
+
+  .hero-lead {
+    font-size: 20px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 620px;
+    margin-bottom: 48px;
+    font-weight: 400;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 48px;
+    flex-wrap: wrap;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    font-size: 13px;
+  }
+
+  .hero-meta-item span {
+    display: block;
+    color: var(--ink-muted);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .hero-meta-item strong {
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  /* ————— Section base ————— */
+  .section {
+    padding: 120px 0;
+    position: relative;
+  }
+
+  .section--warm {
+    background: var(--surface-warm);
+    border-top: 1px solid var(--rule-soft);
+    border-bottom: 1px solid var(--rule-soft);
+  }
+
+  .section--ink {
+    background: var(--hs-neutral);
+    color: var(--hs-cream);
+  }
+
+  .section--ink .eyebrow { border-color: var(--hs-tangerine); color: var(--hs-tangerine); }
+  .section--ink h2 { color: var(--hs-cream); }
+  .section--ink .section-lead { color: rgba(248, 245, 238, 0.72); }
+
+  .section-head {
+    max-width: 760px;
+    margin-bottom: 72px;
+  }
+
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--hs-orange);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-eyebrow::before {
+    content: '';
+    width: 20px;
+    height: 1px;
+    background: var(--hs-orange);
+  }
+
+  h2 {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 300;
+    font-size: clamp(36px, 4.5vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    margin-bottom: 24px;
+  }
+
+  .section-lead {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 640px;
+  }
+
+  /* ————— Stats row (What we've heard) ————— */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .stat-cell {
+    padding: 48px 32px 48px 0;
+    border-right: 1px solid var(--rule);
+  }
+
+  .stat-cell:last-child { border-right: none; }
+  .stat-cell:not(:first-child) { padding-left: 32px; }
+
+  .stat-num {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 300;
+    font-size: 68px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--hs-orange);
+    margin-bottom: 10px;
+  }
+
+  .stat-note {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink-muted);
+  }
+
+  @media (max-width: 900px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .stat-cell:nth-child(2) { border-right: none; }
+    .stat-cell:nth-child(-n+2) { border-bottom: 1px solid var(--rule); }
+    .stat-cell:nth-child(3) { padding-left: 0 !important; border-right: 1px solid var(--rule); }
+  }
+
+  @media (max-width: 560px) {
+    .stats-row { grid-template-columns: 1fr; }
+    .stat-cell { padding: 36px 0 !important; border-right: none !important; border-bottom: 1px solid var(--rule); }
+    .stat-cell:last-child { border-bottom: none; }
+    .stat-num { font-size: 56px; }
+  }
+
+  /* ————— Challenge grid ————— */
+  .challenge-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+
+  .challenge-card {
+    background: var(--surface);
+    padding: 44px;
+    position: relative;
+  }
+
+  .challenge-num {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    color: var(--hs-orange);
+    margin-bottom: 12px;
+    letter-spacing: 0.08em;
+  }
+
+  .challenge-card h3 {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 400;
+    font-size: 26px;
+    letter-spacing: -0.015em;
+    margin-bottom: 16px;
+    line-height: 1.15;
+  }
+
+  .challenge-card p {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 720px) {
+    .challenge-grid { grid-template-columns: 1fr; }
+    .challenge-card { padding: 36px 28px; }
+  }
+
+  /* ————— Vision list ————— */
+  .vision-list {
+    max-width: 900px;
+  }
+
+  .vision-item {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    gap: 32px;
+    padding: 32px 0;
+    border-top: 1px solid var(--rule);
+    align-items: start;
+  }
+
+  .vision-item:last-child { border-bottom: 1px solid var(--rule); }
+
+  .vision-num {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+    color: var(--hs-orange);
+    padding-top: 4px;
+  }
+
+  .vision-item h3 {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    letter-spacing: -0.012em;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+
+  .vision-item p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 680px;
+  }
+
+  @media (max-width: 560px) {
+    .vision-item { grid-template-columns: 1fr; gap: 10px; }
+    .vision-num { font-size: 16px; }
+  }
+
+  /* ————— Solution (three hubs) ————— */
+  .hubs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .hub {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 40px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+  }
+
+  .hub:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -20px rgba(20, 20, 20, 0.12);
+  }
+
+  .hub::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--grad-energized);
+  }
+
+  .hub-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--hs-orange);
+    margin-bottom: 18px;
+  }
+
+  .hub-name {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+
+  .hub-role {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ink-muted);
+    margin-bottom: 20px;
+    letter-spacing: 0.01em;
+  }
+
+  .hub-desc {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin-bottom: 28px;
+  }
+
+  .hub-caps {
+    list-style: none;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .hub-caps li {
+    padding: 10px 0;
+    border-top: 1px solid var(--rule-soft);
+    display: flex;
+    align-items: start;
+    gap: 10px;
+  }
+
+  .hub-caps li::before {
+    content: '→';
+    color: var(--hs-orange);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 900px) {
+    .hubs { grid-template-columns: 1fr; }
+  }
+
+  /* ————— Demo walkthrough & video embed ————— */
+  .video-wrap {
+    max-width: 1000px;
+    margin: 0 auto 96px;
+  }
+
+  .video-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .video-link:hover {
+    transform: translateY(-3px);
+  }
+
+  .video-link:hover .video-frame {
+    box-shadow: 0 50px 100px -40px rgba(20, 20, 20, 0.35), 0 0 0 1px var(--rule);
+  }
+
+  .video-link:hover .video-play {
+    background: var(--hs-orange);
+    transform: scale(1.06);
+  }
+
+  .video-link:focus-visible {
+    outline: none;
+  }
+
+  .video-link:focus-visible .video-frame {
+    box-shadow: 0 0 0 3px var(--hs-orange), 0 40px 80px -40px rgba(20, 20, 20, 0.25);
+  }
+
+  .video-frame {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 */
+    background: var(--hs-neutral);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 40px 80px -40px rgba(20, 20, 20, 0.25), 0 0 0 1px var(--rule);
+    transition: box-shadow 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .video-frame > iframe,
+  .video-frame > embed,
+  .video-frame > video,
+  .video-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .video-placeholder {
+    background: var(--grad-light);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px;
+    color: var(--hs-neutral);
+  }
+
+  .video-play {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: var(--hs-neutral);
+    color: var(--hs-cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 24px;
+    padding-left: 4px;
+    box-shadow: 0 10px 30px -10px rgba(20, 20, 20, 0.35);
+    transition: background 0.3s ease, transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .video-placeholder-title {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 400;
+    font-size: 26px;
+    margin-bottom: 10px;
+    letter-spacing: -0.015em;
+    color: var(--hs-neutral);
+  }
+
+  .video-placeholder-sub {
+    font-size: 13px;
+    color: var(--hs-magenta);
+    opacity: 0.75;
+    max-width: 420px;
+    line-height: 1.55;
+  }
+
+  .video-caption {
+    margin-top: 24px;
+    font-size: 14px;
+    color: var(--ink-muted);
+    text-align: center;
+    letter-spacing: 0.01em;
+  }
+
+  .video-caption strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* Walkthrough features grid */
+  .features-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+  }
+
+  .feature-theme {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 56px;
+    padding-top: 56px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .feature-theme:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
+
+  .theme-num {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 300;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    color: var(--hs-orange);
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .theme-header h3 {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+    color: var(--ink);
+  }
+
+  .theme-desc {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink-muted);
+  }
+
+  .feature-cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 36px;
+  }
+
+  .feature-group h4 {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--hs-orange);
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .feature-group ul {
+    list-style: none;
+  }
+
+  .feature-group li {
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    padding: 7px 0;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .feature-group li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 14px;
+    width: 5px;
+    height: 5px;
+    background: var(--hs-orange);
+    border-radius: 50%;
+    opacity: 0.75;
+  }
+
+  @media (max-width: 960px) {
+    .feature-theme { grid-template-columns: 1fr; gap: 28px; padding-top: 48px; }
+    .feature-cols { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  }
+
+  @media (max-width: 600px) {
+    .feature-cols { grid-template-columns: 1fr; gap: 28px; }
+    .video-placeholder { padding: 24px; }
+    .video-placeholder-title { font-size: 20px; }
+    .video-play { width: 56px; height: 56px; font-size: 18px; margin-bottom: 18px; }
+  }
+
+  /* ————— Solution options (4 options, 2x2 layout) ————— */
+
+  /* Preamble — investment framing + ROI CTA */
+  .options-preamble {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 56px;
+    align-items: center;
+    margin-bottom: 72px;
+    padding: 48px;
+    background: linear-gradient(135deg, rgba(255, 165, 129, 0.18) 0%, rgba(251, 222, 210, 0.12) 100%);
+    border: 1px solid rgba(255, 165, 129, 0.3);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .options-preamble::before {
+    content: '';
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(circle, rgba(255, 165, 129, 0.25) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .options-preamble-text {
+    position: relative;
+    z-index: 1;
+  }
+
+  .options-preamble-text p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+
+  .options-preamble-text p:last-child { margin-bottom: 0; }
+
+  .options-preamble-text strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .roi-cta {
+    background: var(--hs-neutral);
+    color: var(--hs-cream);
+    padding: 32px;
+    border-radius: 6px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .roi-cta-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--hs-tangerine);
+    margin-bottom: 12px;
+  }
+
+  .roi-cta h4 {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    color: var(--hs-cream);
+    margin-bottom: 12px;
+  }
+
+  .roi-cta p {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: rgba(248, 245, 238, 0.7);
+    margin-bottom: 22px;
+  }
+
+  .roi-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 18px;
+    background: var(--hs-orange);
+    color: var(--hs-white);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 100px;
+    letter-spacing: 0.01em;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+
+  .roi-cta-btn:hover {
+    background: var(--hs-tangerine);
+    color: var(--hs-neutral);
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 900px) {
+    .options-preamble {
+      grid-template-columns: 1fr;
+      gap: 28px;
+      padding: 32px 28px;
+    }
+  }
+
+  /* Two rows of two cards */
+  .options-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  @media (max-width: 900px) {
+    .options-grid { grid-template-columns: 1fr; gap: 20px; }
+  }
+
+  .option-card {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 36px 32px 32px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s ease;
+  }
+
+  .option-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 30px 60px -30px rgba(20, 20, 20, 0.15);
+  }
+
+  .option-card--featured {
+    background: var(--hs-neutral);
+    color: var(--hs-cream);
+    border-color: var(--hs-neutral);
+  }
+
+  .option-card--featured::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--grad-energized);
+  }
+
+  .option-recommended {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    padding: 5px 10px;
+    background: var(--hs-orange);
+    color: var(--hs-white);
+    border-radius: 100px;
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* Header row of card */
+  .option-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: end;
+    margin-bottom: 28px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .option-card--featured .option-header {
+    border-bottom-color: rgba(248, 245, 238, 0.12);
+  }
+
+  .option-num {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--hs-orange);
+    margin-bottom: 12px;
+  }
+
+  .option-card--featured .option-num {
+    color: var(--hs-tangerine);
+  }
+
+  .option-name {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+
+  .option-card--featured .option-name {
+    color: var(--hs-cream);
+  }
+
+  .option-tag {
+    font-size: 13px;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+
+  .option-card--featured .option-tag {
+    color: rgba(248, 245, 238, 0.65);
+  }
+
+  /* The hero per-centre figure */
+  .option-per-centre {
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .per-centre-num {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 200;
+    font-size: 44px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--hs-orange);
+    margin-bottom: 6px;
+    white-space: nowrap;
+  }
+
+  .option-card--featured .per-centre-num {
+    color: var(--hs-tangerine);
+  }
+
+  .per-centre-num .small {
+    font-size: 22px;
+    font-weight: 300;
+  }
+
+  .per-centre-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    line-height: 1.4;
+  }
+
+  .option-card--featured .per-centre-label {
+    color: rgba(248, 245, 238, 0.55);
+  }
+
+  /* Hubs included pills */
+  .option-hubs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 24px;
+  }
+
+  .hub-pill {
+    padding: 6px 12px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    background: var(--hs-peach);
+    color: var(--hs-magenta);
+  }
+
+  .hub-pill--off {
+    background: transparent;
+    color: var(--ink-whisper);
+    border: 1px dashed var(--rule);
+  }
+
+  .option-card--featured .hub-pill {
+    background: rgba(255, 165, 129, 0.18);
+    color: var(--hs-tangerine);
+  }
+
+  .option-card--featured .hub-pill--off {
+    background: transparent;
+    color: rgba(248, 245, 238, 0.3);
+    border-color: rgba(248, 245, 238, 0.18);
+  }
+
+  /* Capabilities list */
+  .option-caps-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--hs-orange);
+    margin-bottom: 12px;
+  }
+
+  .option-card--featured .option-caps-label {
+    color: var(--hs-tangerine);
+  }
+
+  .option-caps {
+    list-style: none;
+    margin-bottom: 24px;
+    flex-grow: 1;
+  }
+
+  .option-caps li {
+    padding: 7px 0 7px 18px;
+    position: relative;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  .option-card--featured .option-caps li {
+    color: rgba(248, 245, 238, 0.78);
+  }
+
+  .option-caps li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 14px;
+    width: 8px;
+    height: 1px;
+    background: var(--hs-orange);
+  }
+
+  .option-caps li.cap-out {
+    color: var(--ink-whisper);
+  }
+
+  .option-card--featured .option-caps li.cap-out {
+    color: rgba(248, 245, 238, 0.3);
+  }
+
+  .option-caps li.cap-out::before {
+    background: var(--ink-whisper);
+    opacity: 0.4;
+  }
+
+  /* Pricing footer */
+  .option-price {
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    margin-top: auto;
+  }
+
+  .option-card--featured .option-price {
+    border-top-color: rgba(248, 245, 238, 0.12);
+  }
+
+  .price-rows {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  .price-row-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 5px;
+    line-height: 1.3;
+  }
+
+  .option-card--featured .price-row-label {
+    color: rgba(248, 245, 238, 0.55);
+  }
+
+  .price-row-value {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 400;
+    font-size: 17px;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .option-card--featured .price-row-value {
+    color: var(--hs-cream);
+  }
+
+  /* Phased pilot recommendation banner */
+  .phased-banner {
+    margin-top: 56px;
+    padding: 36px 40px;
+    background: var(--hs-neutral);
+    color: var(--hs-cream);
+    border-radius: 8px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 32px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .phased-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--grad-energized);
+  }
+
+  .phased-icon {
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(255, 165, 129, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 300;
+    font-size: 22px;
+    color: var(--hs-tangerine);
+    letter-spacing: -0.04em;
+  }
+
+  .phased-content {
+    flex-grow: 1;
+  }
+
+  .phased-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--hs-tangerine);
+    margin-bottom: 8px;
+  }
+
+  .phased-content h4 {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    color: var(--hs-cream);
+    margin-bottom: 10px;
+  }
+
+  .phased-content p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(248, 245, 238, 0.78);
+    margin: 0;
+  }
+
+  .phased-content p strong {
+    color: var(--hs-cream);
+    font-weight: 600;
+  }
+
+  @media (max-width: 760px) {
+    .phased-banner {
+      grid-template-columns: 1fr;
+      gap: 18px;
+      padding: 28px 24px 28px 28px;
+    }
+    .phased-icon { display: none; }
+  }
+
+  /* Footnote — ANZ-discount + caveats */
+  .options-foot {
+    margin-top: 56px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+  }
+
+  .options-foot-item strong {
+    display: block;
+    color: var(--ink);
+    font-weight: 600;
+    margin-bottom: 4px;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 760px) {
+    .options-foot { grid-template-columns: 1fr; gap: 20px; }
+    .option-header { grid-template-columns: 1fr; gap: 18px; align-items: start; }
+    .option-per-centre { text-align: left; }
+    .price-rows { grid-template-columns: 1fr; gap: 14px; }
+  }
+
+  /* ————— ROI / Impact section ————— */
+  .impact-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-bottom: 72px;
+    align-items: end;
+  }
+
+  @media (max-width: 860px) {
+    .impact-intro { grid-template-columns: 1fr; gap: 32px; }
+  }
+
+  .impact-source {
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(248, 245, 238, 0.55);
+    max-width: 440px;
+  }
+
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(248, 245, 238, 0.1);
+    border: 1px solid rgba(248, 245, 238, 0.1);
+    margin-bottom: 48px;
+  }
+
+  .impact-stat {
+    background: var(--hs-neutral);
+    padding: 48px 28px;
+    transition: background 0.3s;
+  }
+
+  .impact-stat:hover {
+    background: #1d1d1d;
+  }
+
+  .impact-big {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 300;
+    font-size: 72px;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    background: var(--grad-energized);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 16px;
+  }
+
+  .impact-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--hs-cream);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+
+  .impact-note {
+    font-size: 12px;
+    line-height: 1.5;
+    color: rgba(248, 245, 238, 0.55);
+  }
+
+  @media (max-width: 900px) {
+    .impact-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 520px) {
+    .impact-grid { grid-template-columns: 1fr; }
+    .impact-big { font-size: 58px; }
+  }
+
+  /* TCO callout strip */
+  .tco-strip {
+    background: linear-gradient(135deg, rgba(255, 72, 0, 0.08) 0%, rgba(251, 49, 168, 0.05) 100%);
+    border: 1px solid rgba(255, 165, 129, 0.2);
+    border-radius: 4px;
+    padding: 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 48px;
+  }
+
+  .tco-item h4 {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 1;
+    color: var(--hs-tangerine);
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+  }
+
+  .tco-item h5 {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--hs-cream);
+    margin-bottom: 10px;
+  }
+
+  .tco-item p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(248, 245, 238, 0.7);
+  }
+
+  @media (max-width: 860px) {
+    .tco-strip { grid-template-columns: 1fr; gap: 36px; padding: 36px 28px; }
+  }
+
+  /* ————— Stories (case studies) ————— */
+  .stories {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  .story {
+    padding-top: 36px;
+    border-top: 2px solid var(--hs-orange);
+  }
+
+  .story-tag {
+    display: inline-block;
+    padding: 5px 12px;
+    border: 1px solid var(--hs-orange);
+    color: var(--hs-orange);
+    border-radius: 100px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .story h3 {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 400;
+    font-size: 28px;
+    letter-spacing: -0.015em;
+    margin-bottom: 16px;
+    line-height: 1.15;
+  }
+
+  .story p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin-bottom: 20px;
+  }
+
+  .story-metric {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    border-top: 1px solid var(--rule-soft);
+    padding-top: 16px;
+  }
+
+  @media (max-width: 860px) {
+    .stories { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  /* ————— Partner section ————— */
+  .partner-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 64px;
+    align-items: stretch;
+    margin-bottom: 56px;
+  }
+
+  @media (max-width: 900px) {
+    .partner-grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+
+  .partner-intro {
+    padding: 8px 0;
+  }
+
+  .partner-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: var(--hs-peach);
+    color: var(--hs-magenta);
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .partner-name {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 300;
+    font-size: clamp(36px, 4.5vw, 52px);
+    line-height: 1;
+    letter-spacing: -0.035em;
+    color: var(--ink);
+    margin-bottom: 24px;
+  }
+
+  .partner-name span {
+    color: var(--hs-orange);
+    font-weight: 400;
+  }
+
+  .partner-lead {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin-bottom: 32px;
+  }
+
+  .partner-body p {
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin-bottom: 18px;
+  }
+
+  .partner-body p:last-child { margin-bottom: 0; }
+
+  .partner-actions {
+    display: flex;
+    gap: 14px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+  }
+
+  .partner-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 22px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  }
+
+  .partner-btn--primary {
+    background: var(--hs-orange);
+    color: var(--hs-white);
+  }
+
+  .partner-btn--primary:hover {
+    background: var(--hs-neutral);
+    transform: translateY(-1px);
+  }
+
+  .partner-btn--ghost {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid rgba(20, 20, 20, 0.18);
+  }
+
+  .partner-btn--ghost:hover {
+    border-color: var(--hs-orange);
+    color: var(--hs-orange);
+  }
+
+  /* Right-side credentials card */
+  .partner-card {
+    background: var(--grad-light);
+    border-radius: 6px;
+    padding: 44px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .partner-card::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle, rgba(255,255,255,0.5) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .partner-card-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .partner-card h3 {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 400;
+    font-size: 22px;
+    letter-spacing: -0.015em;
+    color: var(--hs-neutral);
+    margin-bottom: 28px;
+    line-height: 1.2;
+  }
+
+  .partner-card-list {
+    list-style: none;
+  }
+
+  .partner-card-list li {
+    padding: 14px 0;
+    border-top: 1px solid rgba(70, 6, 43, 0.12);
+    color: var(--hs-magenta);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .partner-card-list li:first-child { border-top: none; padding-top: 0; }
+  .partner-card-list li:last-child { padding-bottom: 0; }
+
+  .partner-card-list strong {
+    display: block;
+    color: var(--hs-neutral);
+    font-weight: 600;
+    font-size: 13.5px;
+    margin-bottom: 4px;
+  }
+
+  /* Credentials strip — bottom of partner section */
+  .creds-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .cred-cell {
+    padding: 32px 24px 32px 0;
+    border-right: 1px solid var(--rule);
+  }
+
+  .cred-cell:last-child { border-right: none; }
+  .cred-cell:not(:first-child) { padding-left: 24px; }
+
+  .cred-num {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 200;
+    font-size: 44px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .cred-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--hs-orange);
+    margin-bottom: 8px;
+  }
+
+  .cred-note {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ink-muted);
+  }
+
+  @media (max-width: 760px) {
+    .creds-strip { grid-template-columns: 1fr; }
+    .cred-cell { padding: 28px 0 !important; border-right: none !important; border-bottom: 1px solid var(--rule); }
+    .cred-cell:last-child { border-bottom: none; }
+    .partner-card { padding: 36px 28px; }
+  }
+
+  /* ————— Next steps ————— */
+  .nextsteps {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .nextsteps { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  .steps-list {
+    counter-reset: step;
+    list-style: none;
+  }
+
+  .steps-list li {
+    counter-increment: step;
+    padding: 28px 0 28px 56px;
+    border-top: 1px solid var(--rule);
+    position: relative;
+  }
+
+  .steps-list li:last-child { border-bottom: 1px solid var(--rule); }
+
+  .steps-list li::before {
+    content: counter(step, decimal-leading-zero);
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 300;
+    font-size: 18px;
+    color: var(--hs-orange);
+    position: absolute;
+    left: 0;
+    top: 28px;
+  }
+
+  .steps-list h4 {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 400;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+  }
+
+  .steps-list p {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  .sidecard {
+    background: var(--grad-light);
+    padding: 44px 36px;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sidecard::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 60%);
+  }
+
+  .sidecard-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .sidecard h3 {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 400;
+    font-size: 26px;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    color: var(--hs-neutral);
+  }
+
+  .sidecard p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--hs-magenta);
+    margin-bottom: 24px;
+  }
+
+  .sidecard-contact {
+    font-size: 13px;
+    color: var(--hs-magenta);
+    border-top: 1px solid rgba(70, 6, 43, 0.15);
+    padding-top: 20px;
+  }
+
+  .sidecard-contact strong {
+    display: block;
+    color: var(--hs-neutral);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .contact-line {
+    margin-bottom: 4px;
+    color: var(--hs-magenta);
+  }
+
+  .contact-line a {
+    color: var(--hs-magenta);
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(70, 6, 43, 0.25);
+    transition: border-color 0.2s;
+  }
+
+  .contact-line a:hover {
+    border-bottom-color: var(--hs-magenta);
+  }
+
+  .book-btn {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 12px 20px;
+    background: var(--hs-neutral);
+    color: var(--hs-cream);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    border-radius: 4px;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+
+  .book-btn:hover {
+    background: var(--hs-orange);
+    transform: translateY(-1px);
+  }
+
+  /* ————— Footer ————— */
+  .footer {
+    padding: 64px 0 48px;
+    border-top: 1px solid var(--rule);
+    font-size: 13px;
+    color: var(--ink-muted);
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .footer-mark {
+    font-family: 'Lexend Deca', sans-serif;
+    font-weight: 300;
+    font-size: 17px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+
+  .footer-mark em {
+    font-style: normal;
+    font-weight: 400;
+    color: var(--hs-orange);
+  }
+
+  /* ————— Animation ————— */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in {
+    opacity: 0;
+    animation: fadeUp 0.9s ease forwards;
+  }
+
+  .hero .fade-in:nth-child(1) { animation-delay: 0.1s; }
+  .hero .fade-in:nth-child(2) { animation-delay: 0.25s; }
+  .hero .fade-in:nth-child(3) { animation-delay: 0.4s; }
+  .hero .fade-in:nth-child(4) { animation-delay: 0.55s; }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Subtle scroll decoration */
+  .scroll-hint {
+    position: absolute;
+    bottom: 48px;
+    left: 40px;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .scroll-hint::before {
+    content: '';
+    width: 36px;
+    height: 1px;
+    background: var(--ink-muted);
+  }
+
+  @media (max-width: 720px) {
+    .scroll-hint { display: none; }
+    .hero { padding: 80px 0 100px; }
+    .section { padding: 80px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ————— Navigation ————— -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <span>BestStart</span>
+      <span class="brand-x">×</span>
+      <span>HubSpot</span>
+    </div>
+    <div class="nav-links">
+      <a href="#context">Context</a>
+      <a href="#vision">Vision</a>
+      <a href="#solution">Solution</a>
+      <a href="#demo">Walkthrough</a>
+      <a href="#options">Options</a>
+      <a href="#impact">Impact</a>
+      <a href="#stories">Stories</a>
+      <a href="#partner">Partner</a>
+      <a href="#next">Next</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ————— Hero ————— -->
+<section class="hero">
+  <div class="wrap hero-content">
+    <span class="eyebrow fade-in">Evaluation brief · April 2026</span>
+    <h1 class="display fade-in">Growing together,<br><em>family by family.</em></h1>
+    <p class="hero-lead fade-in">A closer look at how HubSpot could sit alongside APT — replacing OnePlace and Autopilot — to give your 260 centres one gentle, connected way to guide every family from first enquiry to that first welcome morning.</p>
+    <div class="hero-meta fade-in">
+      <div class="hero-meta-item">
+        <span>Prepared for</span>
+        <strong>Ruth Reid · Head of Marketing, BestStart</strong>
+      </div>
+      <div class="hero-meta-item">
+        <span>Prepared by</span>
+        <strong>Flavia Fontana · HubSpot ANZ</strong>
+      </div>
+      <div class="hero-meta-item">
+        <span>Following</span>
+        <strong>Demo, 22 April 2026</strong>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">Scroll to explore</div>
+</section>
+
+<!-- ————— What we've heard ————— -->
+<section id="context" class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">What we've heard</div>
+      <h2>Your world, as we understand it.</h2>
+      <p class="section-lead">BestStart is one of New Zealand's most established early childhood providers. That scale brings real opportunity — and, we know, a few growing pains. Here's the landscape you've shared with us.</p>
+    </div>
+
+    <div class="stats-row reveal">
+      <div class="stat-cell">
+        <div class="stat-num">260</div>
+        <div class="stat-label">Centres</div>
+        <p class="stat-note">Across New Zealand — a network large enough to deserve a platform built to match it.</p>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Disconnected systems</div>
+        <p class="stat-note">APT, OnePlace and Autopilot — each doing a piece, none speaking to one another.</p>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">18<span style="font-size: 0.5em;">mo</span></div>
+        <div class="stat-label">Typical to longest</div>
+        <p class="stat-note">Enquiries arrive anywhere from a month out to 18 months ahead — often during pregnancy.</p>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">1<span style="font-size: 0.45em; color: var(--ink-muted);">:n</span></div>
+        <div class="stat-label">Family to children</div>
+        <p class="stat-note">One family, multiple children, potentially several centres — one story to tell.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ————— Challenges ————— -->
+<section class="section section--warm">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">The friction</div>
+      <h2>What's getting in the way today.</h2>
+      <p class="section-lead">None of this is new to you — but it's worth naming clearly, because every part of the HubSpot case below responds directly to one of these.</p>
+    </div>
+
+    <div class="challenge-grid reveal">
+      <div class="challenge-card">
+        <div class="challenge-num">01</div>
+        <h3>A fragmented tech stack</h3>
+        <p>APT, OnePlace and Autopilot each do a piece of the puzzle, but none speak to one another. No single view of a family exists across them, so your central team and centre administrators fill the gaps manually — which costs time and introduces risk.</p>
+      </div>
+      <div class="challenge-card">
+        <div class="challenge-num">02</div>
+        <h3>Family &amp; child relationships</h3>
+        <p>Most CRMs weren't built for the reality of early childhood: one family, multiple children, each at different centres, across different waitlists — sometimes a parent enquiring at two sites in the same town for the same child. That complexity gets flattened inside generic contact records.</p>
+      </div>
+      <div class="challenge-card">
+        <div class="challenge-num">03</div>
+        <h3>Waitlists that feel personal</h3>
+        <p>Some of your centres do a beautiful job calling families every two to four weeks. The challenge is keeping that warmth consistent across all 260 locations — without burning out the teams who do it well, and without leaving families at less-resourced centres feeling forgotten.</p>
+      </div>
+      <div class="challenge-card">
+        <div class="challenge-num">04</div>
+        <h3>Nurture that scales gently</h3>
+        <p>With parents enquiring up to 18 months before a start date, Autopilot's basic flows leave many of those long-lead relationships without the gentle guidance they need. Families go quiet, centre managers can't keep everyone warm, and opportunities quietly slip away.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ————— What good looks like ————— -->
+<section id="vision" class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">What good looks like</div>
+      <h2>A single journey — from first enquiry to that first day.</h2>
+      <p class="section-lead">Each of these outcomes is achievable, and we've seen organisations of similar complexity get there. They're the measuring sticks we'd want to hold ourselves to, together.</p>
+    </div>
+
+    <div class="vision-list reveal">
+      <div class="vision-item">
+        <div class="vision-num">01</div>
+        <div>
+          <h3>One platform, one journey</h3>
+          <p>A single system covering the full enquiry-to-enrolment path — from a parent's first Google search, through tour booking and nurture, to the handshake with APT on the child's welcome morning.</p>
+        </div>
+      </div>
+      <div class="vision-item">
+        <div class="vision-num">02</div>
+        <div>
+          <h3>Family and child records that mirror reality</h3>
+          <p>Records that reflect how centres actually work: one family unit, linked children, multiple locations, and communication tokens that pull through the right centre name and child's details without re-keying.</p>
+        </div>
+      </div>
+      <div class="vision-item">
+        <div class="vision-num">03</div>
+        <div>
+          <h3>Centralised waitlists with a personal touch</h3>
+          <p>Manage all 260 waitlists from one dashboard — without losing the warmth that makes BestStart different. Centres still drive the conversations; central just makes sure nobody falls through a crack.</p>
+        </div>
+      </div>
+      <div class="vision-item">
+        <div class="vision-num">04</div>
+        <div>
+          <h3>Smart, gentle nurture</h3>
+          <p>SMS and email, triggered at the right moment — meeting families where they are, whether they're 18 months out and just starting to research, or a fortnight from their tour and making final decisions.</p>
+        </div>
+      </div>
+      <div class="vision-item">
+        <div class="vision-num">05</div>
+        <div>
+          <h3>A clean handshake with APT</h3>
+          <p>Two-way integration so nobody gets contacted twice. Enrolment data flows seamlessly; the team stop double-handling; APT stays the system of truth for enrolled families, and HubSpot handles everything upstream.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ————— The solution ————— -->
+<section id="solution" class="section section--warm">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">The solution</div>
+      <h2>One platform. Three moving parts, working as one.</h2>
+      <p class="section-lead">Each piece handles a distinct stage of the enquiry-to-enrolment journey — and because they share the same contact record, there's no double-handling, no data re-entry, and no family falling through the cracks.</p>
+    </div>
+
+    <div class="hubs reveal">
+      <div class="hub">
+        <div class="hub-name">Capture &amp; nurture</div>
+        <div class="hub-role">For Justin, the regional marketing execs, and every centre-level campaign</div>
+        <p class="hub-desc">Ads, landing pages, forms, SMS and email. Smart workflows guide long-lead families from first curiosity to booking a tour — automatically, at scale, across 260 locations from a single template library.</p>
+        <ul class="hub-caps">
+          <li>Website forms, live chat &amp; Breeze-powered conversational capture</li>
+          <li>Centralised templates with local tokens (centre name, days, pricing)</li>
+          <li>SMS + email nurture flows up to 18 months out</li>
+          <li>Revenue attribution across Google, Meta, TikTok, LinkedIn</li>
+          <li>AEO dashboard for visibility across ChatGPT, Gemini, Perplexity</li>
+        </ul>
+      </div>
+
+      <div class="hub">
+        <div class="hub-name">One family view</div>
+        <div class="hub-role">For the central enquiry team and every centre administrator</div>
+        <p class="hub-desc">Link multiple children to a single family record. See every touchpoint across every centre a family has engaged with. Trigger the right follow-up at the right moment — without the manual note-keeping that happens today.</p>
+        <ul class="hub-caps">
+          <li>Family object with linked parent and child records</li>
+          <li>Centre object with capacity, availability, area manager</li>
+          <li>Anonymous visitor tracking for up to 6 months pre-enquiry</li>
+          <li>Mobile app for centre directors on the floor</li>
+          <li>Granular permissions per role (central, area, centre)</li>
+        </ul>
+      </div>
+
+      <div class="hub">
+        <div class="hub-name">Waitlists &amp; support</div>
+        <div class="hub-role">Replacing OnePlace, without losing what works</div>
+        <p class="hub-desc">Replace OnePlace's repurposed ticketing with a proper queue built around preferred start dates, days needed, and personal conversations — delivered at scale across all 260 centres with SLAs that flag when follow-ups slip.</p>
+        <ul class="hub-caps">
+          <li>Dynamic waitlists by preferred start date, days and times</li>
+          <li>Centre, area-manager and central dashboards</li>
+          <li>SLA alerts when a tour follow-up hasn't happened on time</li>
+          <li>Post-tour surveys feeding back into the record</li>
+          <li>Two-way APT integration for enrolled families</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ————— Demo walkthrough ————— -->
+<section id="demo" class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">From the demo · 22 April 2026</div>
+      <h2>Everything we walked through, in one place.</h2>
+      <p class="section-lead">Lucy's full walkthrough is below — yours to share with the wider evaluation team whenever's useful. Beneath it, a recap of every capability we covered, grouped by the four themes of the demo.</p>
+    </div>
+
+    <!--
+      ═══════════════════════════════════════════════════════════════════
+      VIDEO LINK — GONG CALL RECORDING
+      ───────────────────────────────────────────────────────────────────
+      The frame below is a clickable link that opens the Gong recording
+      in a new tab. Gong share links are auth-gated and don't reliably
+      embed inside an iframe, so click-to-open is the most robust pattern.
+      To swap the recording, just update the href on the .video-link tag.
+      ═══════════════════════════════════════════════════════════════════
+    -->
+    <div class="video-wrap reveal">
+      <a class="video-link" href="https://us-3691.app.gong.io/e/c-share/?tkn=twr2rwgfj6ci1ljbx7uwslrut" target="_blank" rel="noopener">
+        <div class="video-frame">
+          <div class="video-placeholder">
+            <div class="video-play">▶</div>
+            <div class="video-placeholder-title">Watch the demo recording</div>
+            <div class="video-placeholder-sub">59-minute walkthrough with Lucy Seed — opens in Gong</div>
+          </div>
+        </div>
+      </a>
+      <div class="video-caption"><strong>22 April 2026</strong> · Lucy Seed, Principal Solutions Engineer · Hosted on Gong</div>
+    </div>
+
+    <!-- Features organised by theme -->
+    <div class="features-grid reveal">
+
+      <!-- Theme 01 -->
+      <div class="feature-theme">
+        <div class="theme-header">
+          <span class="theme-num">Theme 01</span>
+          <h3>A seamless enquiry experience</h3>
+          <p class="theme-desc">Every channel a parent might enter BestStart from — captured, attributed and gently nurtured, whether they're 18 months out or a fortnight from enrolment.</p>
+        </div>
+        <div class="feature-cols">
+          <div class="feature-group">
+            <h4>Lead capture</h4>
+            <ul>
+              <li>Website forms &amp; landing pages</li>
+              <li>Facebook / Meta lead ads</li>
+              <li>Exit-intent pop-ups for bouncing visitors</li>
+              <li>Breeze conversational AI bot ("Lina")</li>
+              <li>Live chat with human handoff</li>
+              <li>Embedded booking links per centre</li>
+              <li>Centralised triage to the right centre</li>
+            </ul>
+          </div>
+          <div class="feature-group">
+            <h4>Nurture &amp; engagement</h4>
+            <ul>
+              <li>Email + SMS automation sequences</li>
+              <li>Long-lead flows (up to 18 months)</li>
+              <li>Personalised tokens: centre, child, start date</li>
+              <li>Anonymous visitor tracking (6 months)</li>
+              <li>Behavioural triggers from web activity</li>
+              <li>WhatsApp capture on the contact timeline</li>
+              <li>Centralised templates with local customisation</li>
+            </ul>
+          </div>
+          <div class="feature-group">
+            <h4>Attribution &amp; AEO</h4>
+            <ul>
+              <li>Ad tracking: Meta, Google, TikTok, LinkedIn, YouTube</li>
+              <li>Original source + latest source reporting</li>
+              <li>Revenue attribution by channel</li>
+              <li>Conversion-funnel drop-off analysis</li>
+              <li>AEO dashboard: ChatGPT, Gemini, Perplexity</li>
+              <li>Share of voice + citation tracking</li>
+              <li>Sentiment analysis + content recommendations</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Theme 02 -->
+      <div class="feature-theme">
+        <div class="theme-header">
+          <span class="theme-num">Theme 02</span>
+          <h3>Tours &amp; enquiry workflow</h3>
+          <p class="theme-desc">The full choreography from "I'd like to book a tour" through to "thanks for coming in" — with all the small moments between handled automatically.</p>
+        </div>
+        <div class="feature-cols">
+          <div class="feature-group">
+            <h4>Tour booking</h4>
+            <ul>
+              <li>Centre-unique embedded meeting links</li>
+              <li>Real-time calendar availability</li>
+              <li>Configurable buffer times between tours</li>
+              <li>Outlook &amp; Google Calendar sync</li>
+              <li>Auto-notification to centre admin + manager</li>
+              <li>Tour time slot selection by parent</li>
+            </ul>
+          </div>
+          <div class="feature-group">
+            <h4>Automated workflows</h4>
+            <ul>
+              <li>Pre-tour reminders (email + SMS, 1 day before)</li>
+              <li>Reply-to-confirm SMS (yes / no)</li>
+              <li>Post-tour branching: attended / no-show / reschedule</li>
+              <li>Post-tour surveys (NPS-style, 1–10)</li>
+              <li>Walk-in handling with manual stage move</li>
+              <li>Inquiry stages: new → booked → attended</li>
+            </ul>
+          </div>
+          <div class="feature-group">
+            <h4>Re-engagement</h4>
+            <ul>
+              <li>Automated rescheduling paths</li>
+              <li>Task creation for centre admin call-backs</li>
+              <li>Retargeting audiences for drop-offs (Google, Meta)</li>
+              <li>Lead scoring by age, engagement, fit</li>
+              <li>Centre-level SLA alerts when response times slip</li>
+              <li>Intent flagging for "tyre-kicker" vs serious enquirers</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Theme 03 -->
+      <div class="feature-theme">
+        <div class="theme-header">
+          <span class="theme-num">Theme 03</span>
+          <h3>The centre experience</h3>
+          <p class="theme-desc">Tools built for both the centre administrator at her desk and the centre director on the floor — same data, two tailored views.</p>
+        </div>
+        <div class="feature-cols">
+          <div class="feature-group">
+            <h4>Everyday tools</h4>
+            <ul>
+              <li>Mobile app (iOS + Android)</li>
+              <li>Desktop interface with identical data</li>
+              <li>Daily task view with upcoming tours</li>
+              <li>Outlook calendar connection</li>
+              <li>AI summaries of long contact histories</li>
+              <li>Click-to-call &amp; one-tap email from record</li>
+              <li>Family record with linked children &amp; partners</li>
+            </ul>
+          </div>
+          <div class="feature-group">
+            <h4>Communication</h4>
+            <ul>
+              <li>Centre-specific email templates</li>
+              <li>Personalised tokens per child &amp; centre</li>
+              <li>One-to-one sequences &amp; snippets</li>
+              <li>Personal meeting links per centre manager</li>
+              <li>Activity timeline across every touchpoint</li>
+              <li>Mobile-friendly template library</li>
+            </ul>
+          </div>
+          <div class="feature-group">
+            <h4>Permissions &amp; guardrails</h4>
+            <ul>
+              <li>Granular role-based permissions</li>
+              <li>Central marketing retains template control</li>
+              <li>Centres customise within approved frameworks</li>
+              <li>Service seat (lighter footprint) for centre staff</li>
+              <li>Terminology adjustable ("service" vs "sales")</li>
+              <li>Live chat support + academy for self-learning</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Theme 04 -->
+      <div class="feature-theme">
+        <div class="theme-header">
+          <span class="theme-num">Theme 04</span>
+          <h3>Reporting &amp; waitlists</h3>
+          <p class="theme-desc">Visibility at every level — centre, area, central HQ — with the waitlist complexity your team has asked for, delivered without new spreadsheets.</p>
+        </div>
+        <div class="feature-cols">
+          <div class="feature-group">
+            <h4>Dashboards</h4>
+            <ul>
+              <li>Centre-level dashboards (single location)</li>
+              <li>Area manager views (~8 centres each)</li>
+              <li>Central HQ aggregated reporting</li>
+              <li>Scheduled email digests (e.g., Monday 9am)</li>
+              <li>Fully customisable tiles — add, remove, edit</li>
+              <li>Configurable time periods &amp; filters</li>
+            </ul>
+          </div>
+          <div class="feature-group">
+            <h4>SLAs &amp; performance</h4>
+            <ul>
+              <li>Response-time SLAs with escalation alerts</li>
+              <li>No-show vs attendance tracking</li>
+              <li>Survey results by centre &amp; area</li>
+              <li>Goal trackers for enquiries &amp; tours</li>
+              <li>Top-performing centre benchmarks</li>
+              <li>Revenue attribution at centre level</li>
+              <li>End-of-month follow-up gap reporting</li>
+            </ul>
+          </div>
+          <div class="feature-group">
+            <h4>Waitlist management</h4>
+            <ul>
+              <li>Centre record with capacity data</li>
+              <li>Linked inquiries sorted oldest to newest</li>
+              <li>First-in-first-out prioritisation</li>
+              <li>Click-to-call &amp; email-from-record actions</li>
+              <li>Manual or semi-autonomous offer workflows</li>
+              <li>APT integration for real-time capacity</li>
+              <li>Complex filtering: days, sessions, ages, ratios</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ————— Solution options (commercial · 4 options, 2x2) ————— -->
+<section id="options" class="section section--warm">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">The HubSpot solution · Four options</div>
+      <h2>What we'd propose, four ways.</h2>
+    </div>
+
+    <!-- Preamble: investment framing + ROI session CTA -->
+    <div class="options-preamble reveal">
+      <div class="options-preamble-text">
+        <p>At first glance, a platform investment of this scale can feel substantial — and we understand why that might give the team pause. But here's the way we'd encourage you to look at it: <strong>spread across 260 centres, the headline number becomes a very small per-centre figure</strong>, and the gains in family experience, conversion, and team time saved typically far outweigh the licence cost.</p>
+        <p>Each option below shows the <strong>cost per centre, per month</strong> as the headline number — because that's the figure that actually reflects the operational reality of BestStart. And worth knowing upfront: <strong>HubSpot's Smart CRM is included free with every option</strong>, so the family + child + centre records sit at the heart of everything regardless of which path you choose.</p>
+      </div>
+
+      <div class="roi-cta">
+        <div class="roi-cta-label">Want a tailored view?</div>
+        <h4>A custom TCO &amp; ROI session, on us.</h4>
+        <p>Our business value consultant can sit with you, review BestStart's specific situation — current costs, conversion rates, time spent on manual processes — and build a tailored ROI model. Pick a time that suits you below.</p>
+        <a href="https://hubspot.com/meetings/ffontana1/roi" class="roi-cta-btn" target="_blank" rel="noopener">Book a session →</a>
+      </div>
+    </div>
+
+    <!-- TOP ROW — recommended fuller options -->
+    <div class="options-grid reveal">
+
+      <!-- Option 01: Everything (RECOMMENDED) -->
+      <article class="option-card option-card--featured">
+        <span class="option-recommended">Recommended</span>
+
+        <div class="option-header">
+          <div>
+            <div class="option-num">Option 01 · Full</div>
+            <h3 class="option-name">Everything — Marketing + Sales + Service</h3>
+            <p class="option-tag">The complete journey, with full Sales Hub Pro seats for every centre.</p>
+          </div>
+          <div class="option-per-centre">
+            <div class="per-centre-num">$103<span class="small">/mo</span></div>
+            <div class="per-centre-label">Per centre<br>per month</div>
+          </div>
+        </div>
+
+        <div class="option-hubs">
+          <span class="hub-pill">Marketing Hub Pro</span>
+          <span class="hub-pill">Sales Hub Pro × 260</span>
+          <span class="hub-pill">Service Hub Pro</span>
+        </div>
+
+        <div class="option-caps-label">What's included</div>
+        <ul class="option-caps">
+          <li>Full Sales Hub Pro for every centre — full toolkit, no compromise</li>
+          <li>Marketing Hub Pro for the central team (capture, nurture, attribution)</li>
+          <li>Service Hub Pro for the central enquiry team and waitlist management</li>
+          <li>30,000 marketing contacts included</li>
+          <li>Replaces Autopilot <em>and</em> OnePlace</li>
+        </ul>
+
+        <div class="option-price">
+          <div class="price-rows">
+            <div>
+              <div class="price-row-label">Annual investment</div>
+              <div class="price-row-value">$320,652</div>
+            </div>
+            <div>
+              <div class="price-row-label">Monthly net</div>
+              <div class="price-row-value">$26,721</div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Option 02: Core Seats -->
+      <article class="option-card">
+        <div class="option-header">
+          <div>
+            <div class="option-num">Option 02 · Smart-savings</div>
+            <h3 class="option-name">Same coverage, lighter Core seats</h3>
+            <p class="option-tag">Same hubs as Option 01, but centre staff use lighter Core seats — significantly lower cost.</p>
+          </div>
+          <div class="option-per-centre">
+            <div class="per-centre-num">$53<span class="small">/mo</span></div>
+            <div class="per-centre-label">Per centre<br>per month</div>
+          </div>
+        </div>
+
+        <div class="option-hubs">
+          <span class="hub-pill">Marketing Hub Pro</span>
+          <span class="hub-pill">Sales Hub Pro × 1</span>
+          <span class="hub-pill">Service Hub Pro</span>
+          <span class="hub-pill">+ 265 Core seats</span>
+        </div>
+
+        <div class="option-caps-label">What's included</div>
+        <ul class="option-caps">
+          <li>Full hub coverage — Marketing, Sales and Service all live</li>
+          <li>1 full Sales Hub Pro seat for the central enquiry team lead</li>
+          <li>265 Core seats for centre staff (lighter footprint, big savings)</li>
+          <li>30,000 marketing contacts included</li>
+          <li>Replaces Autopilot <em>and</em> OnePlace</li>
+          <li>Almost half the cost of Option 01 with very similar capability</li>
+        </ul>
+
+        <div class="option-price">
+          <div class="price-rows">
+            <div>
+              <div class="price-row-label">Annual investment</div>
+              <div class="price-row-value">$166,392</div>
+            </div>
+            <div>
+              <div class="price-row-label">Monthly net</div>
+              <div class="price-row-value">$13,866</div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- BOTTOM ROW — lighter / single-hub alternatives -->
+    <div class="options-grid reveal" style="margin-top: 24px;">
+
+      <!-- Option 03: Sales Only -->
+      <article class="option-card">
+        <div class="option-header">
+          <div>
+            <div class="option-num">Option 03 · CRM-only</div>
+            <h3 class="option-name">Sales Hub only</h3>
+            <p class="option-tag">For all 260 centres and the central enquiry team — no marketing automation.</p>
+          </div>
+          <div class="option-per-centre">
+            <div class="per-centre-num">$96<span class="small">/mo</span></div>
+            <div class="per-centre-label">Per centre<br>per month</div>
+          </div>
+        </div>
+
+        <div class="option-hubs">
+          <span class="hub-pill--off hub-pill">Marketing Hub</span>
+          <span class="hub-pill">Sales Hub Pro × 265</span>
+          <span class="hub-pill">Service Hub Pro</span>
+        </div>
+
+        <div class="option-caps-label">What's included</div>
+        <ul class="option-caps">
+          <li>Smart CRM with family + child + centre records</li>
+          <li>Tour booking, automated reminders &amp; follow-ups</li>
+          <li>Mobile app for centre directors and admins</li>
+          <li>Centre, area-manager and HQ dashboards</li>
+          <li class="cap-out">No marketing automation (Autopilot stays)</li>
+          <li class="cap-out">No formal waitlist queue</li>
+        </ul>
+
+        <div class="option-price">
+          <div class="price-rows">
+            <div>
+              <div class="price-row-label">Annual investment</div>
+              <div class="price-row-value">$299,448</div>
+            </div>
+            <div>
+              <div class="price-row-label">Monthly net</div>
+              <div class="price-row-value">$24,954</div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Option 04: Marketing Only -->
+      <article class="option-card">
+        <div class="option-header">
+          <div>
+            <div class="option-num">Option 04 · Lean</div>
+            <h3 class="option-name">Marketing Hub only</h3>
+            <p class="option-tag">For the central marketing team — capture and nurture, with minimal CRM access.</p>
+          </div>
+          <div class="option-per-centre">
+            <div class="per-centre-num">$10<span class="small">/mo</span></div>
+            <div class="per-centre-label">Per centre<br>per month</div>
+          </div>
+        </div>
+
+        <div class="option-hubs">
+          <span class="hub-pill">Marketing Hub Pro</span>
+          <span class="hub-pill">Sales Hub Pro × 1</span>
+          <span class="hub-pill">Service Hub Pro × 1</span>
+          <span class="hub-pill">Smart CRM (included)</span>
+        </div>
+
+        <div class="option-caps-label">What's included</div>
+        <ul class="option-caps">
+          <li>Marketing Hub Pro for the central team</li>
+          <li>Smart CRM with family + child + centre records (free, included with every HubSpot plan)</li>
+          <li>Email and SMS nurture flows up to 18 months</li>
+          <li>Centralised templates with local tokens for centres</li>
+          <li>Revenue attribution &amp; AEO dashboard</li>
+          <li>1 Sales + 1 Service seat for central enquiry handover</li>
+          <li>Replaces Autopilot</li>
+          <li class="cap-out">No paid seats for centre staff (no workflows, sequences or automation at centre level)</li>
+          <li class="cap-out">No replacement for OnePlace ticketing</li>
+        </ul>
+
+        <div class="option-price">
+          <div class="price-rows">
+            <div>
+              <div class="price-row-label">Annual investment</div>
+              <div class="price-row-value">$31,608</div>
+            </div>
+            <div>
+              <div class="price-row-label">Monthly net</div>
+              <div class="price-row-value">$2,634</div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Phased pilot recommendation -->
+    <div class="phased-banner reveal">
+      <div class="phased-icon">⟶</div>
+      <div class="phased-content">
+        <div class="phased-label">Our recommendation, regardless of option</div>
+        <h4>Start with a pilot — a handful of centres, then scale.</h4>
+        <p>Whichever option you choose, we'd strongly recommend a <strong>phased rollout starting with a small group of pilot centres</strong> — proving the workflow, gathering feedback from centre directors and admins, and refining the configuration before extending to the full 260. It gives your team time to learn the platform, builds internal champions, and means the wider rollout lands on a tested foundation rather than a hopeful one. Engaging.io will help us shape the pilot scope as part of their scoping work.</p>
+      </div>
+    </div>
+
+    <div class="options-foot reveal">
+      <div class="options-foot-item">
+        <strong>40% NFP discount applied</strong>
+        Every figure above already reflects the not-for-profit discount. Pricing is in AUD, ex GST.
+      </div>
+      <div class="options-foot-item">
+        <strong>Phasing is on the table</strong>
+        Any of these can split into phased rollouts if helpful with budget timing. Start with one hub, add others when ready.
+      </div>
+      <div class="options-foot-item">
+        <strong>Implementation is separate</strong>
+        Engaging.io's build cost (APT integration, configuration, training) sits alongside the licence figures. Their estimate follows scoping.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ————— Impact / ROI ————— -->
+<section id="impact" class="section section--ink">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">The numbers</div>
+      <h2 style="color: var(--hs-cream);">What customers typically see,<br>12 months in.</h2>
+    </div>
+
+    <div class="impact-intro reveal">
+      <p style="font-size: 17px; line-height: 1.65; color: rgba(248, 245, 238, 0.78); max-width: 560px;">These aren't the ceiling. They're the averages — drawn from HubSpot's annual ROI study of customers who've been on the platform for at least twelve months. Think of them as a floor to hold ourselves to, translated into the metrics that matter for BestStart.</p>
+      <p class="impact-source">Source: HubSpot Annual ROI Report — based on aggregated data from 268,000+ HubSpot customers across 135+ countries. Results vary by industry, geography, stage and adoption depth. This is shared for planning, not as a promise.</p>
+    </div>
+
+    <div class="impact-grid reveal">
+      <div class="impact-stat">
+        <div class="impact-big">129%</div>
+        <div class="impact-label">More inbound enquiries</div>
+        <p class="impact-note">Increase in form submissions after 12 months — the shape of what your centralised capture could look like.</p>
+      </div>
+      <div class="impact-stat">
+        <div class="impact-big">113%</div>
+        <div class="impact-label">More website traffic</div>
+        <p class="impact-note">Uplift for customers using Marketing Hub — helpful for long-lead families researching 18 months out.</p>
+      </div>
+      <div class="impact-stat">
+        <div class="impact-big">36%</div>
+        <div class="impact-label">More conversions</div>
+        <p class="impact-note">Sales Hub customers close 36% more deals after 12 months. Translated: more tours becoming enrolments.</p>
+      </div>
+      <div class="impact-stat">
+        <div class="impact-big">68%</div>
+        <div class="impact-label">Faster to launch campaigns</div>
+        <p class="impact-note">Time saved by your three regional marketing execs — templates, tokens, and one central library.</p>
+      </div>
+    </div>
+
+    <div class="tco-strip reveal">
+      <div class="tco-item">
+        <h5>Total cost of ownership</h5>
+        <h4>40%</h4>
+        <p>Not-for-profit discount applied to Professional and Enterprise tiers across Marketing, CRM and Service — baked into your quote from day one.</p>
+      </div>
+      <div class="tco-item">
+        <h5>Per-seat economics</h5>
+        <h4>~½</h4>
+        <p>Lighter Core seats for centre staff at roughly half the cost of full seats. Your 260 centres don't need the full toolkit — and you won't pay for it.</p>
+      </div>
+      <div class="tco-item">
+        <h5>Platform consolidation</h5>
+        <h4>–2</h4>
+        <p>OnePlace and Autopilot retire. APT stays, integrated. Fewer bills, one login for your teams, one place for data — and one implementation partner to stand it all up.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ————— Customer stories ————— -->
+<section id="stories" class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">You're in good company</div>
+      <h2>Organisations that look a lot like yours.</h2>
+      <p class="section-lead">These aren't enterprise tech companies. They're purpose-driven organisations working with families, children and communities — navigating the same complexity BestStart does every day.</p>
+    </div>
+
+    <div class="stories reveal">
+      <div class="story">
+        <div class="story-tag">Early childhood · AU</div>
+        <h3>Only About Children</h3>
+        <p>A purpose-led early years education and childcare provider with 80+ campuses across Sydney, Melbourne and Brisbane, serving over 8,000 families. Uses HubSpot to manage family relationships, the enrolment journey, and multi-campus engagement at scale.</p>
+        <div class="story-metric">Most directly comparable reference — we can make introductions.</div>
+      </div>
+      <div class="story">
+        <div class="story-tag">Multi-location · AU</div>
+        <h3>Junior Adventures Group</h3>
+        <p>Preschool and after-school programs running across hundreds of locations nationally. HubSpot handles their family and child data structure, plus centralised campaign management with local personalisation at scale.</p>
+        <div class="story-metric">Closest match for your centralised-with-local-flex model.</div>
+      </div>
+      <div class="story">
+        <div class="story-tag">Not-for-profit · NZ</div>
+        <h3>The Y</h3>
+        <p>A national family-services organisation in New Zealand that moved to HubSpot to consolidate lead capture, tracking and ongoing engagement — no more tool-hopping across disconnected platforms, with the not-for-profit pricing we'd extend to BestStart.</p>
+        <div class="story-metric">Proof the NFP discount and integration scope work locally.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ————— Implementation partner ————— -->
+<section id="partner" class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">Our recommended partner</div>
+      <h2>Who we'd like to introduce you to.</h2>
+      <p class="section-lead">A HubSpot platform is only ever as good as the team that stands it up. For a project of BestStart's scope and complexity — APT integration, family/child data structure, 260 centres rolled out thoughtfully — we'd recommend bringing Engaging.io in as your implementation partner.</p>
+    </div>
+
+    <div class="partner-grid reveal">
+      <div class="partner-intro">
+        <span class="partner-tag">Implementation partner</span>
+        <h3 class="partner-name">Engaging<span>.io</span></h3>
+        <p class="partner-lead">Sydney-based, with a presence in New Zealand — and one of the most experienced HubSpot partners in the region. They've been recognised as <strong>HubSpot's JAPAC Partner of the Year</strong> and have held an Advanced Implementation Certification for years.</p>
+        <div class="partner-body">
+          <p>What makes them the right fit for BestStart specifically: they've built complex, custom HubSpot solutions for organisations with similar shape — multi-location, multi-stakeholder, layered data structures, and integrations into bespoke industry systems. The family/child relationship modelling and the APT integration aren't off-the-shelf work, and Engaging has done that kind of bespoke architecture before.</p>
+          <p>Practically, that experience translates into a more cost-effective project. They're not learning the patterns on your dollar — they're adapting solutions they've already built. For a not-for-profit with the budget sensitivities you've shared, that matters.</p>
+          <p>Michelle O'Keeffe, their CEO, would be the right first conversation. She's worked across implementations with a similar feel — purpose-led, multi-site, complex data — and I think you'd genuinely enjoy talking to her. Happy to make the introduction whenever you're ready.</p>
+        </div>
+        <div class="partner-actions">
+          <a href="https://www.engaging.io" class="partner-btn partner-btn--primary" target="_blank" rel="noopener">Visit engaging.io →</a>
+        </div>
+      </div>
+
+      <aside class="partner-card">
+        <div class="partner-card-content">
+          <h3>Why Engaging, in their own words.</h3>
+          <ul class="partner-card-list">
+            <li>
+              <strong>HubSpot JAPAC Partner of the Year</strong>
+              Most recent recognition from HubSpot for the Japan and APAC region.
+            </li>
+            <li>
+              <strong>Advanced Implementation Certified</strong>
+              One of the few global partners with this credential — purpose-built for complex CRM rollouts.
+            </li>
+            <li>
+              <strong>15+ years partnering with HubSpot</strong>
+              Founded in 2009, awarded by HubSpot every year for the last six years running.
+            </li>
+            <li>
+              <strong>Specialists in custom integrations</strong>
+              Bespoke integrations into ERP, legacy CRMs, and industry-specific platforms — exactly what APT will need.
+            </li>
+            <li>
+              <strong>Operating across Australia, NZ &amp; Asia</strong>
+              Recently led HubSpot rollouts spanning ANZ + ASEAN regions for similar mid-to-large organisations.
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+
+    <div class="creds-strip reveal">
+      <div class="cred-cell">
+        <div class="cred-num">#1</div>
+        <div class="cred-label">JAPAC partner</div>
+        <p class="cred-note">HubSpot Partner of the Year for the Japan &amp; APAC region.</p>
+      </div>
+      <div class="cred-cell">
+        <div class="cred-num">15+</div>
+        <div class="cred-label">Years</div>
+        <p class="cred-note">Building HubSpot solutions for mid-market and enterprise clients since 2009.</p>
+      </div>
+      <div class="cred-cell">
+        <div class="cred-num">6×</div>
+        <div class="cred-label">Award-winning</div>
+        <p class="cred-note">HubSpot Impact &amp; Performance Awards across six consecutive years.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ————— Next steps ————— -->
+<section id="next" class="section section--warm">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-eyebrow">Where to next</div>
+      <h2>What happens from here.</h2>
+      <p class="section-lead">Here's the shape of the next few conversations — with the aim of giving you everything you need to make a confident recommendation to your wider team.</p>
+    </div>
+
+    <div class="nextsteps reveal">
+      <ol class="steps-list">
+        <li>
+          <h4>Introduction to Michelle at Engaging.io</h4>
+          <p>I'll connect you with Michelle O'Keeffe, CEO. She'll scope the APT integration with her team and give you a realistic build estimate — flexed for the not-for-profit sector norms we've discussed.</p>
+        </li>
+        <li>
+          <h4>Indicative pricing proposal</h4>
+          <p>Marketing Hub Pro + Smart CRM + Service Hub Starter, with the 40% NFP discount applied, lighter seats for centre staff, and scope variants if you'd prefer to phase it.</p>
+        </li>
+        <li>
+          <h4>A deeper-dive session, when ready</h4>
+          <p>When the wider team is ready, a second session focused on the bigger questions: integration architecture, data governance, security, and the total picture over a three-year horizon.</p>
+        </li>
+      </ol>
+
+      <aside class="sidecard">
+        <div class="sidecard-content">
+          <h3>Let's keep talking.</h3>
+          <p>This brief is a working document — if anything's missed or doesn't quite fit your world, just let me know. Happy to jump on a quick call whenever suits.</p>
+          <div class="sidecard-contact">
+            <strong>Flavia Fontana</strong>
+            <div class="contact-line">Enterprise Account Executive · ANZ</div>
+            <div class="contact-line">Mobile · <a href="tel:+61475133389">0475 133 389</a></div>
+            <a href="https://www.hubspot.com/meetings/ffontana1" class="book-btn" target="_blank" rel="noopener">Book time with me →</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ————— Footer ————— -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-mark">Growing together, <em>family by family.</em></div>
+      <div>BestStart × HubSpot · Evaluation brief · April 2026</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Minimal scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
