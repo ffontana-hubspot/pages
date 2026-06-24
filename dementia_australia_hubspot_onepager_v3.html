@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HubSpot x Dementia Australia — Platform Proposal</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --hs-orange:#FF4800;--hs-tangerine:#FFA581;--hs-peach:#FBDED2;--hs-fuchsia:#FB31A8;
+    --hs-neutral:#141414;--hs-cream:#F8F5EE;--hs-white:#FFFFFF;
+    --grad-energy:linear-gradient(135deg,#FBDED2 0%,#FF4800 50%,#FB31A8 100%);
+    --fluid-bg:radial-gradient(ellipse 70% 60% at 0% 5%,#FD9067 0%,transparent 60%),radial-gradient(ellipse 55% 55% at 100% 0%,#FADED3 0%,transparent 55%),radial-gradient(ellipse 60% 55% at 55% 55%,#FCC4D1 0%,transparent 60%),radial-gradient(ellipse 60% 55% at 0% 100%,#FE7FAA 0%,transparent 60%),radial-gradient(ellipse 55% 55% at 100% 100%,#FCDEE0 0%,transparent 55%),#FADED3;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+  body{font-family:'Lexend Deca',sans-serif;background:var(--hs-cream);color:var(--hs-neutral);overflow-x:hidden;font-weight:300}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(248,245,238,0.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,72,0,0.12);padding:14px 48px;display:flex;align-items:center;justify-content:space-between}
+  .nav-logo{display:flex;align-items:center;gap:16px}
+  .nav-brand{font-size:15px;font-weight:600;color:var(--hs-neutral);display:flex;align-items:center;gap:8px}
+  .nav-x{color:#FFA581;font-size:18px;font-weight:300}
+  .nav-badge{background:var(--grad-energy);color:white;font-size:10px;font-weight:600;padding:4px 14px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
+  .hero{min-height:100vh;background:var(--fluid-bg);display:flex;align-items:center;padding:140px 80px 100px;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(ellipse 60% 60% at 80% 60%,rgba(254,127,170,0.35) 0%,transparent 65%);pointer-events:none}
+  .hero-inner{max-width:720px;position:relative}
+  .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--hs-orange);margin-bottom:28px}
+  .pulse-dot{width:6px;height:6px;border-radius:50%;background:var(--hs-orange);animation:pulse 2s infinite}
+  .hero h1{font-size:clamp(38px,5vw,64px);font-weight:700;line-height:1.1;color:var(--hs-neutral);margin-bottom:24px;letter-spacing:-1px}
+  .hero h1 em{font-style:normal;background:var(--grad-energy);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .hero-sub{font-size:16px;font-weight:300;color:rgba(20,20,20,0.65);line-height:1.75;max-width:560px;margin-bottom:44px}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+  .btn-primary{background:var(--hs-orange);color:white;font-family:'Lexend Deca',sans-serif;font-size:14px;font-weight:500;padding:14px 28px;border-radius:10px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all 0.25s}
+  .btn-primary:hover{background:#e03e00;transform:translateY(-2px);box-shadow:0 8px 32px rgba(255,72,0,0.3)}
+  .btn-secondary{background:var(--hs-white);border:1.5px solid rgba(255,72,0,0.25);color:var(--hs-orange);font-family:'Lexend Deca',sans-serif;font-size:14px;font-weight:500;padding:13px 28px;border-radius:10px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all 0.25s}
+  .btn-secondary:hover{border-color:var(--hs-orange);transform:translateY(-2px)}
+  .stats-strip{background:var(--hs-white);border-bottom:1px solid rgba(255,72,0,0.08);padding:36px 80px;display:grid;grid-template-columns:repeat(4,1fr)}
+  .stat-item{text-align:center;padding:16px;border-right:1px solid rgba(20,20,20,0.07)}
+  .stat-item:last-child{border-right:none}
+  .stat-value{font-size:36px;font-weight:700;letter-spacing:-1.5px;background:var(--grad-energy);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+  .stat-label{font-size:13px;font-weight:400;color:rgba(20,20,20,0.5);margin-top:6px}
+  .stat-source{font-size:10px;color:rgba(20,20,20,0.3);margin-top:3px}
+  section{padding:100px 80px}
+  .section-eyebrow{font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--hs-orange);margin-bottom:14px;display:block}
+  .section-title{font-size:clamp(28px,3vw,44px);font-weight:700;line-height:1.15;margin-bottom:18px;letter-spacing:-0.5px}
+  .section-title em{font-style:normal;background:var(--grad-energy);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .section-intro{font-size:15px;font-weight:300;color:rgba(20,20,20,0.6);max-width:580px;line-height:1.75;margin-bottom:56px}
+  .transformation{background:var(--hs-cream)}
+  .ba-table{max-width:1060px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+  .ba-header-row{display:grid;grid-template-columns:1fr 56px 1fr;margin-bottom:4px}
+  .ba-col-header{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:10px 18px;border-radius:8px;text-align:center}
+  .ba-col-header.before{background:rgba(20,20,20,0.07);color:rgba(20,20,20,0.5)}
+  .ba-col-header.after{background:linear-gradient(135deg,rgba(253,144,103,0.28),rgba(252,196,209,0.32));color:var(--hs-orange)}
+  .ba-row{display:grid;grid-template-columns:1fr 56px 1fr;align-items:stretch}
+  .ba-cell{display:flex;align-items:center;gap:14px;padding:16px 20px}
+  .ba-cell.before{background:var(--hs-white);border:1px solid rgba(20,20,20,0.09);border-radius:10px 0 0 10px}
+  .ba-cell.after{background:linear-gradient(135deg,rgba(253,144,103,0.06),rgba(252,196,209,0.1));border:1px solid rgba(255,72,0,0.13);border-radius:0 10px 10px 0}
+  .ba-row:hover .ba-cell.before{background:rgba(20,20,20,0.025)}
+  .ba-row:hover .ba-cell.after{background:linear-gradient(135deg,rgba(253,144,103,0.12),rgba(252,196,209,0.16))}
+  .ba-arrow-col{display:flex;align-items:center;justify-content:center;font-size:20px;color:#FFA581}
+  .ba-icon{width:36px;height:36px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:16px;background:rgba(20,20,20,0.06)}
+  .ba-icon.good{background:rgba(253,144,103,0.18)}
+  .ba-label{font-size:13.5px;font-weight:600;color:var(--hs-neutral);line-height:1.35}
+  .ba-sublabel{font-size:12px;font-weight:300;color:rgba(20,20,20,0.5);margin-top:3px;line-height:1.5}
+  .hubs-section{background:var(--hs-white)}
+  .crm-bar{background:var(--hs-neutral);border-radius:14px;padding:24px 32px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;position:relative;overflow:hidden}
+  .crm-bar::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(253,144,103,0.12),rgba(254,127,170,0.08));pointer-events:none}
+  .crm-bar-left{display:flex;align-items:center;gap:16px;z-index:1}
+  .crm-bar-title{font-size:17px;font-weight:700;color:var(--hs-white);letter-spacing:-0.3px}
+  .crm-bar-sub{font-size:12px;font-weight:300;color:rgba(255,255,255,0.5);margin-top:3px}
+  .crm-bar-pills{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;z-index:1}
+  .crm-pill{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.13);border-radius:20px;padding:5px 14px;font-size:11.5px;font-weight:400;color:rgba(255,255,255,0.7);white-space:nowrap}
+  .platform-ticks{display:flex;justify-content:space-around;padding:0 10%}
+  .platform-tick{width:1px;height:12px;background:rgba(255,72,0,0.3)}
+  .hubs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px}
+  .hub-card{background:var(--hs-cream);border:1.5px solid rgba(20,20,20,0.07);border-radius:12px;padding:22px 18px;position:relative;overflow:hidden;transition:all 0.25s}
+  .hub-card::before{content:'';position:absolute;inset:-1.5px;background:var(--grad-energy);border-radius:13.5px;z-index:-1;opacity:0;transition:opacity 0.25s}
+  .hub-card:hover{background:var(--hs-white);transform:translateY(-3px);box-shadow:0 12px 36px rgba(253,144,103,0.15)}
+  .hub-card:hover::before{opacity:1}
+  .hub-name{font-size:13.5px;font-weight:700;color:var(--hs-neutral);margin-bottom:12px}
+  .hub-features{list-style:none}
+  .hub-features li{font-size:11.5px;font-weight:300;color:rgba(20,20,20,0.58);padding:5px 0;border-bottom:1px solid rgba(20,20,20,0.06);display:flex;align-items:flex-start;gap:7px;line-height:1.45}
+  .hub-features li:last-child{border-bottom:none}
+  .hub-features li::before{content:'→';color:var(--hs-orange);font-weight:600;flex-shrink:0;font-size:10px;margin-top:2px}
+  .ai-section{background:var(--hs-cream)}
+  .ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:1060px;margin:0 auto}
+  .ai-card{background:var(--hs-white);border-radius:16px;padding:28px;border:1.5px solid rgba(20,20,20,0.07);position:relative;overflow:hidden;transition:all 0.25s}
+  .ai-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--grad-energy)}
+  .ai-card:hover{transform:translateY(-3px);box-shadow:0 16px 48px rgba(253,144,103,0.12)}
+  .ai-card-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:16px}
+  .ai-icon{width:44px;height:44px;border-radius:12px;flex-shrink:0;background:linear-gradient(135deg,rgba(253,144,103,0.15),rgba(252,196,209,0.2));display:flex;align-items:center;justify-content:center;font-size:20px}
+  .ai-card-title{font-size:16px;font-weight:700;margin-bottom:4px}
+  .ai-card-sub{font-size:12px;font-weight:300;color:rgba(20,20,20,0.45)}
+  .ai-card-desc{font-size:13px;font-weight:300;color:rgba(20,20,20,0.6);line-height:1.7;margin-bottom:18px}
+  .ai-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+  .ai-stat{background:var(--hs-cream);border-radius:10px;padding:12px;text-align:center}
+  .ai-stat-num{font-size:20px;font-weight:700;letter-spacing:-0.5px;background:var(--grad-energy);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+  .ai-stat-label{font-size:10px;font-weight:300;color:rgba(20,20,20,0.5);margin-top:4px;line-height:1.4}
+  .ai-features{list-style:none}
+  .ai-features li{font-size:12px;font-weight:300;color:rgba(20,20,20,0.6);padding:5px 0;border-bottom:1px solid rgba(20,20,20,0.06);display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+  .ai-features li:last-child{border-bottom:none}
+  .ai-features li::before{content:'✓';color:var(--hs-orange);font-weight:700;flex-shrink:0;font-size:11px;margin-top:1px}
+  .journey-section{background:var(--hs-cream)}
+  .journey-wrap{max-width:1060px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+  .journey-step{display:flex;gap:16px;align-items:flex-start;padding-bottom:28px;position:relative}
+  .journey-step::after{content:'';position:absolute;left:19px;top:40px;bottom:0;width:2px;background:rgba(255,72,0,0.15)}
+  .journey-step:last-child::after{display:none}
+  .journey-step:last-child{padding-bottom:0}
+  .step-num{width:38px;height:38px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,rgba(253,144,103,0.2),rgba(252,196,209,0.25));border:1.5px solid rgba(255,72,0,0.2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--hs-orange);position:relative;z-index:1}
+  .step-body{flex:1;padding-top:6px}
+  .step-title{font-size:13.5px;font-weight:600;color:var(--hs-neutral);margin-bottom:5px}
+  .step-desc{font-size:12px;font-weight:300;color:rgba(20,20,20,0.55);line-height:1.65}
+  .step-ai-tag{display:inline-block;background:var(--grad-energy);color:white;font-size:9px;font-weight:700;padding:2px 7px;border-radius:20px;vertical-align:middle;margin-left:6px;letter-spacing:0.5px}
+  .time-saving-card{background:var(--hs-white);border-radius:14px;padding:22px 24px;border:1px solid rgba(255,72,0,0.1);margin-bottom:12px;transition:all 0.2s}
+  .time-saving-card:hover{border-color:rgba(253,144,103,0.3);background:linear-gradient(135deg,rgba(253,144,103,0.04),rgba(252,196,209,0.06))}
+  .ts-header{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .ts-icon{font-size:18px}
+  .ts-title{font-size:13px;font-weight:600}
+  .ts-saving{font-size:24px;font-weight:700;letter-spacing:-0.5px;background:var(--grad-energy);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;margin-bottom:4px}
+  .ts-desc{font-size:11.5px;font-weight:300;color:rgba(20,20,20,0.5);line-height:1.6}
+  .phases-section{background:var(--hs-white)}
+  .phases-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1060px;margin:0 auto}
+  .phase-card{background:var(--hs-white);border-radius:14px;padding:26px 22px;border:1.5px solid rgba(20,20,20,0.07);position:relative;overflow:hidden}
+  .phase-card.featured{border-color:rgba(255,72,0,0.2);background:linear-gradient(135deg,rgba(253,144,103,0.04),rgba(252,196,209,0.07))}
+  .phase-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:14px;background:rgba(20,20,20,0.06);color:rgba(20,20,20,0.5)}
+  .phase-tag.now{background:linear-gradient(135deg,rgba(253,144,103,0.2),rgba(252,196,209,0.25));color:var(--hs-orange)}
+  .phase-title{font-size:15px;font-weight:700;margin-bottom:8px}
+  .phase-sub{font-size:12px;font-weight:300;color:rgba(20,20,20,0.55);line-height:1.65;margin-bottom:16px}
+  .phase-items{list-style:none}
+  .phase-items li{font-size:12px;font-weight:300;color:rgba(20,20,20,0.6);padding:5px 0;border-bottom:1px solid rgba(20,20,20,0.06);display:flex;align-items:flex-start;gap:7px;line-height:1.5}
+  .phase-items li:last-child{border-bottom:none}
+  .phase-items li::before{content:'→';color:var(--hs-orange);font-weight:600;flex-shrink:0;font-size:10px;margin-top:2px}
+  .nfp-section{background:var(--hs-neutral);position:relative;overflow:hidden}
+  .nfp-section::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(253,144,103,0.08),rgba(254,127,170,0.06));pointer-events:none}
+  .nfp-inner{max-width:1060px;margin:0 auto;display:grid;grid-template-columns:1.2fr 1fr;gap:80px;align-items:center;position:relative;z-index:1}
+  .nfp-content .section-eyebrow{color:#FFA581}
+  .nfp-content .section-title{color:var(--hs-white)}
+  .nfp-desc{font-size:14px;font-weight:300;color:rgba(255,255,255,0.65);line-height:1.75;margin-bottom:20px}
+  .nfp-pills{display:flex;flex-wrap:wrap;gap:8px}
+  .nfp-pill{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.13);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:400;color:rgba(255,255,255,0.7)}
+  .nfp-stats{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .nfp-stat-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:22px}
+  .nfp-stat-num{font-size:30px;font-weight:700;letter-spacing:-1px;background:var(--grad-energy);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;margin-bottom:6px}
+  .nfp-stat-label{font-size:12px;font-weight:300;color:rgba(255,255,255,0.5);line-height:1.5}
+  .bvc-section{background:var(--hs-cream)}
+  .bvc-inner{max-width:860px;margin:0 auto}
+  .bvc-card{border:2.5px solid var(--hs-orange);border-radius:16px;padding:40px 44px;background:linear-gradient(135deg,rgba(253,144,103,0.04),rgba(252,196,209,0.06))}
+  .bvc-header{display:flex;align-items:flex-start;gap:18px;margin-bottom:20px}
+  .bvc-icon-wrap{width:52px;height:52px;border-radius:14px;flex-shrink:0;background:linear-gradient(135deg,rgba(253,144,103,0.2),rgba(252,196,209,0.25));display:flex;align-items:center;justify-content:center;font-size:24px}
+  .bvc-title{font-size:22px;font-weight:700;margin-bottom:6px;letter-spacing:-0.3px}
+  .bvc-tag{display:inline-block;background:rgba(255,72,0,0.1);color:var(--hs-orange);font-size:11px;font-weight:700;padding:3px 12px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
+  .bvc-desc{font-size:14px;font-weight:300;color:rgba(20,20,20,0.65);line-height:1.75;margin-bottom:20px}
+  .bvc-pills{display:flex;flex-wrap:wrap;gap:10px}
+  .bvc-pill{background:rgba(255,72,0,0.07);border:1px solid rgba(255,72,0,0.15);border-radius:8px;padding:8px 16px;font-size:12.5px;font-weight:500;color:var(--hs-orange)}
+  .steps-section{background:var(--hs-white)}
+  .steps-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:860px;margin:0 auto}
+  .step-card{background:var(--hs-white);border-radius:14px;padding:24px 26px;border:1.5px solid rgba(20,20,20,0.07);transition:all 0.2s}
+  .step-card:hover{border-color:rgba(255,72,0,0.2);transform:translateY(-2px)}
+  .step-card-icon{font-size:24px;margin-bottom:12px}
+  .step-card-title{font-size:14px;font-weight:700;margin-bottom:8px}
+  .step-card-desc{font-size:12.5px;font-weight:300;color:rgba(20,20,20,0.55);line-height:1.65}
+  footer{background:var(--hs-neutral);color:rgba(255,255,255,0.4);padding:28px 80px;display:flex;align-items:center;justify-content:space-between;font-size:11.5px;font-weight:300}
+  .footer-name{font-size:15px;font-weight:600;color:var(--hs-white);display:block}
+  .footer-role{color:#FFA581;display:block;margin-top:2px}
+  .footer-contact{color:rgba(255,255,255,0.4);display:block;margin-top:2px}
+  @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:0.6}}
+  .aud-section{background:var(--hs-white)}
+  .aud-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1060px;margin:0 auto}
+  .aud-card{background:var(--hs-white);border:1.5px solid rgba(20,20,20,0.07);border-radius:14px;padding:24px 22px;transition:all 0.25s;position:relative;overflow:hidden}
+  .aud-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--grad-energy);opacity:0;transition:opacity 0.25s}
+  .aud-card:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(253,144,103,0.12)}
+  .aud-card:hover::after{opacity:1}
+  .aud-icon{font-size:24px;margin-bottom:12px}
+  .aud-name{font-size:14px;font-weight:700;margin-bottom:8px}
+  .aud-desc{font-size:12px;font-weight:300;color:rgba(20,20,20,0.55);line-height:1.6}
+  .stack-section{background:var(--hs-cream)}
+  .stack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1060px;margin:0 auto}
+  .stack-card{background:var(--hs-white);border:1.5px solid rgba(20,20,20,0.07);border-radius:14px;padding:24px 22px;transition:all 0.25s}
+  .stack-card:hover{border-color:rgba(255,72,0,0.2);transform:translateY(-2px)}
+  .stack-tool{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .stack-tool-name{font-size:14px;font-weight:700}
+  .stack-role{font-size:11px;font-weight:400;color:rgba(20,20,20,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px}
+  .stack-status{display:inline-block;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:12px;letter-spacing:0.5px}
+  .stack-status.keep{background:rgba(99,153,34,0.12);color:#3B6D11}
+  .stack-status.connect{background:linear-gradient(135deg,rgba(253,144,103,0.2),rgba(252,196,209,0.25));color:var(--hs-orange)}
+  .stack-status.replace{background:rgba(20,20,20,0.07);color:rgba(20,20,20,0.5)}
+  .stack-desc{font-size:12px;font-weight:300;color:rgba(20,20,20,0.55);line-height:1.6}
+  .aeo-section{background:var(--hs-white)}
+  .aeo-card{max-width:1060px;margin:0 auto;background:var(--hs-neutral);border-radius:20px;padding:48px 56px;position:relative;overflow:hidden;display:grid;grid-template-columns:1.3fr 1fr;gap:56px;align-items:center}
+  .aeo-card::before{content:'';position:absolute;top:-150px;right:-100px;width:500px;height:500px;background:radial-gradient(ellipse 60% 60% at 70% 40%,rgba(254,127,170,0.25) 0%,transparent 65%);pointer-events:none}
+  .aeo-content{position:relative;z-index:1}
+  .aeo-badge{display:inline-block;background:var(--grad-energy);color:white;font-size:10px;font-weight:700;padding:5px 14px;border-radius:20px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:18px}
+  .aeo-title{font-size:30px;font-weight:700;color:white;line-height:1.15;margin-bottom:14px;letter-spacing:-0.5px}
+  .aeo-title em{font-style:normal;background:var(--grad-energy);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .aeo-desc{font-size:14px;font-weight:300;color:rgba(255,255,255,0.65);line-height:1.75;margin-bottom:24px}
+  .aeo-pills{display:flex;flex-wrap:wrap;gap:8px}
+  .aeo-pill{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.13);border-radius:20px;padding:6px 14px;font-size:12px;color:rgba(255,255,255,0.7)}
+  .aeo-visual{position:relative;z-index:1}
+  .aeo-stat-big{font-size:64px;font-weight:700;letter-spacing:-2px;background:var(--grad-energy);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;margin-bottom:8px}
+  .aeo-stat-label{font-size:13px;font-weight:300;color:rgba(255,255,255,0.6);line-height:1.6;margin-bottom:28px}
+  .aeo-feature-row{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-top:1px solid rgba(255,255,255,0.1);font-size:12.5px;font-weight:300;color:rgba(255,255,255,0.7);line-height:1.5}
+  .aeo-feature-row::before{content:'✓';color:#FFA581;font-weight:700;flex-shrink:0}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.65s ease,transform 0.65s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  @media(max-width:960px){nav{padding:12px 24px}section,.stats-strip,.hero{padding:60px 24px}.hero{padding:120px 24px 60px}.stats-strip{grid-template-columns:repeat(2,1fr)}.ba-header-row,.ba-row{grid-template-columns:1fr}.ba-arrow-col{display:none}.ba-cell.before{border-radius:8px 8px 0 0}.ba-cell.after{border-radius:0 0 8px 8px}.hubs-grid{grid-template-columns:1fr 1fr}.ai-grid,.journey-wrap,.nfp-inner,.phases-grid,.steps-grid,.stack-grid,.aeo-card{grid-template-columns:1fr}.aeo-card{padding:32px 28px;gap:32px}footer{padding:24px;flex-direction:column;gap:12px;text-align:center}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo">
+    <div class="nav-brand">
+      <svg width="22" height="22" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#FF4800"/><path d="M10 16.5L14.5 21L22.5 12" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      HubSpot
+    </div>
+    <span class="nav-x">×</span>
+    <div class="nav-brand" style="font-weight:500;">Dementia Australia</div>
+    <span class="nav-badge">Platform Proposal</span>
+  </div>
+  <div style="font-size:11px;color:rgba(20,20,20,0.4);font-weight:400;">Prepared by Flavia Fontana · June 2026</div>
+</nav>
+
+<section class="hero" id="top">
+  <div class="hero-inner reveal">
+    <div class="hero-eyebrow"><span class="pulse-dot"></span> Prepared for Dementia Australia · June 2026</div>
+    <h1>From <em>Fragmented</em> to<br>Fully Connected</h1>
+    <p class="hero-sub">One platform to unify your donors, carers, media contacts and NDSP participants — with the automation, AI and analytics your team has always needed to deliver on your mission at scale.</p>
+    <div class="hero-cta">
+      <a href="#challenge" class="btn-primary">Explore the Solution →</a>
+      <a href="#bvc" class="btn-secondary">📊 Free Business Value Consult</a>
+    </div>
+  </div>
+</section>
+
+<div class="stats-strip reveal">
+  <div class="stat-item"><div class="stat-value">5+</div><div class="stat-label">Disconnected platforms today</div><div class="stat-source">Dynamics, Funraisin, Raiser's Edge, Campaign Monitor, Mailchimp</div></div>
+  <div class="stat-item"><div class="stat-value">60%</div><div class="stat-label">Searches end without a click</div><div class="stat-source">AI search landscape, 2025</div></div>
+  <div class="stat-item"><div class="stat-value">1</div><div class="stat-label">Platform to replace them all</div><div class="stat-source">HubSpot — start any time</div></div>
+  <div class="stat-item"><div class="stat-value">NFP</div><div class="stat-label">Pricing available from day one</div><div class="stat-source">Ask Flavia for details</div></div>
+</div>
+
+<section class="transformation" id="challenge">
+  <div style="max-width:1080px;margin:0 auto;">
+    <div class="reveal">
+      <span class="section-eyebrow">The Challenge</span>
+      <h2 class="section-title">Where the Organisation <em>Is Being Held Back</em></h2>
+      <p class="section-intro">Without a connected platform, your team is brilliant people working against broken infrastructure. Donors aren't nurtured. Supporters fall through the cracks. Content goes undiscovered. Leadership can't see the full picture.</p>
+    </div>
+    <div class="ba-table reveal">
+      <div class="ba-header-row">
+        <div class="ba-col-header before">⚠️  &nbsp;Current state</div>
+        <div style="background:transparent;"></div>
+        <div class="ba-col-header after">✦ &nbsp;With HubSpot</div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-cell before"><div class="ba-icon">🗄️</div><div><div class="ba-label">Five-plus disconnected systems — no unified contact view</div><div class="ba-sublabel">Dynamics 365, Funraisin, Raiser's Edge, Campaign Monitor, Mailchimp — no person sees them all</div></div></div>
+        <div class="ba-arrow-col">→</div>
+        <div class="ba-cell after"><div class="ba-icon good">🗄️</div><div><div class="ba-label">One contact record — every interaction visible</div><div class="ba-sublabel">Donor history, event attendance, email opens, helpline contacts — all in one place</div></div></div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-cell before"><div class="ba-icon">💸</div><div><div class="ba-label">Donors give once and are never followed up</div><div class="ba-sublabel">No automated journey, no second gift ask, no lapsed donor detection before it's too late</div></div></div>
+        <div class="ba-arrow-col">→</div>
+        <div class="ba-cell after"><div class="ba-icon good">💸</div><div><div class="ba-label">AI-triggered donor journeys from the moment of first gift</div><div class="ba-sublabel">Thank you → impact story → upgrade ask → EOFY — automated, personalised, always on</div></div></div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-cell before"><div class="ba-icon">📧</div><div><div class="ba-label">Two email platforms, duplicated lists, no segmentation</div><div class="ba-sublabel">Manual exports before every send — hours of work per campaign, no attribution reporting</div></div></div>
+        <div class="ba-arrow-col">→</div>
+        <div class="ba-cell after"><div class="ba-icon good">📧</div><div><div class="ba-label">One platform — smart lists that update automatically</div><div class="ba-sublabel">AI writes the copy, optimises send time per contact, reports revenue attributed by campaign</div></div></div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-cell before"><div class="ba-icon">🔍</div><div><div class="ba-label">Excellent content — increasingly invisible in AI search</div><div class="ba-sublabel">60% of searches never result in a click. Your content needs to be what AI cites, not what people find</div></div></div>
+        <div class="ba-arrow-col">→</div>
+        <div class="ba-cell after"><div class="ba-icon good">🔍</div><div><div class="ba-label">AEO strategy — Dementia Australia becomes the AI-cited authority</div><div class="ba-sublabel">Structured for ChatGPT, Gemini and Perplexity to cite you as the peak body you are</div></div></div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-cell before"><div class="ba-icon">📊</div><div><div class="ba-label">Reporting requires manually pulling from four platforms</div><div class="ba-sublabel">Hours of spreadsheet work before every leadership or board meeting — always lagging</div></div></div>
+        <div class="ba-arrow-col">→</div>
+        <div class="ba-cell after"><div class="ba-icon good">📊</div><div><div class="ba-label">Live dashboard — donor, campaign and content performance in one view</div><div class="ba-sublabel">Share a link with the CTO or board. Data is live, never lagged, always current</div></div></div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-cell before"><div class="ba-icon">🏗️</div><div><div class="ba-label">Roadmap says 12–18 months before anything can start</div><div class="ba-sublabel">Data architecture dependency holding the whole team back from tools they've wanted for years</div></div></div>
+        <div class="ba-arrow-col">→</div>
+        <div class="ba-cell after"><div class="ba-icon good">🏗️</div><div><div class="ba-label">Start with social, email and content today — no dependency</div><div class="ba-sublabel">Dynamics connector and Funraisin integration slot in when the data architecture work is done</div></div></div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-cell before"><div class="ba-icon">🤝</div><div><div class="ba-label">No in-house platform expertise — team constrained by tools</div><div class="ba-sublabel">Ambition exceeds capability because the infrastructure hasn't matched the team structure</div></div></div>
+        <div class="ba-arrow-col">→</div>
+        <div class="ba-cell after"><div class="ba-icon good">🤝</div><div><div class="ba-label">NFP-specialist partners, fast training, in-house ownership from day one</div><div class="ba-sublabel">Unlike Salesforce or Dynamics — no ongoing partner on the payroll once it's set up</div></div></div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-cell before"><div class="ba-icon">🌐</div><div><div class="ba-label">Website built around NDSP personas only — fundraising invisible</div><div class="ba-sublabel">Whole stakeholder groups have no content; donation lives on separate Funraisin subdomains</div></div></div>
+        <div class="ba-arrow-col">→</div>
+        <div class="ba-cell after"><div class="ba-icon good">🌐</div><div><div class="ba-label">Content and journeys for every stakeholder group — donors included</div><div class="ba-sublabel">One connected experience from Drupal content to Funraisin donation, on-brand throughout</div></div></div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-cell before"><div class="ba-icon">☎️</div><div><div class="ba-label">Helpline and live chat sit apart from everything else</div><div class="ba-sublabel">CXone phone system and chat aren't connected to any contact history or marketing data</div></div></div>
+        <div class="ba-arrow-col">→</div>
+        <div class="ba-cell after"><div class="ba-icon good">☎️</div><div><div class="ba-label">Helpline context connected to the full contact record (future state)</div><div class="ba-sublabel">Whoever answers already knows the caller — their donations, enquiries and history</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hubs-section" id="solution">
+  <div style="max-width:1060px;margin:0 auto;">
+    <div class="reveal" style="text-align:center;margin-bottom:44px;">
+      <span class="section-eyebrow">The Platform</span>
+      <h2 class="section-title">One Platform. <em>Mission First.</em></h2>
+      <p class="section-intro" style="margin:0 auto;">Every HubSpot Hub runs on a single Smart CRM — so your fundraising team, content team, comms team and tech team are all looking at the same contact, the same data, and the same truth.</p>
+    </div>
+    <div class="reveal">
+      <div class="crm-bar">
+        <div class="crm-bar-left">
+          <svg width="30" height="30" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="26" r="7" fill="#FF4800"/><circle cx="20" cy="11" r="4" fill="#FF4800"/><circle cx="8" cy="31" r="4" fill="#FF4800"/><circle cx="32" cy="31" r="4" fill="#FF4800"/><line x1="20" y1="15" x2="20" y2="19" stroke="#FF4800" stroke-width="2.5"/><line x1="13" y1="28.5" x2="17" y2="27" stroke="#FF4800" stroke-width="2.5"/><line x1="27" y1="28.5" x2="23" y2="27" stroke="#FF4800" stroke-width="2.5"/></svg>
+          <div><div class="crm-bar-title">Smart CRM — The Connective Tissue</div><div class="crm-bar-sub">One unified contact record powering every Hub — donors, carers, media, volunteers, government partners</div></div>
+        </div>
+        <div class="crm-bar-pills">
+          <div class="crm-pill">Dynamics 365 connector</div>
+          <div class="crm-pill">Funraisin connector</div>
+          <div class="crm-pill">Campaign Monitor migration</div>
+          <div class="crm-pill">1,800+ integrations</div>
+        </div>
+      </div>
+      <div class="platform-ticks"><div class="platform-tick"></div><div class="platform-tick"></div><div class="platform-tick"></div><div class="platform-tick"></div><div class="platform-tick"></div></div>
+      <div class="hubs-grid">
+        <div class="hub-card">
+          <div class="hub-name">Marketing Hub</div>
+          <ul class="hub-features">
+            <li>Replaces Mailchimp &amp; Campaign Monitor</li>
+            <li>Smart lists — auto-segmented by behaviour</li>
+            <li>AI email copy and subject line writer</li>
+            <li>AI send-time optimisation per contact</li>
+            <li>Social media scheduling — all channels</li>
+            <li>Ad management &amp; revenue attribution</li>
+            <li>Live campaign performance dashboards</li>
+          </ul>
+        </div>
+        <div class="hub-card">
+          <div class="hub-name">Content Hub</div>
+          <ul class="hub-features">
+            <li>AI-powered AEO — be cited by ChatGPT</li>
+            <li>Topic cluster strategy for all content</li>
+            <li>AI blog and article first-draft writer</li>
+            <li>Podcast &amp; video repurposing with AI</li>
+            <li>SEO consultant workflow integration</li>
+            <li>Content performance analytics</li>
+            <li>Drupal CMS integration ready</li>
+          </ul>
+        </div>
+        <div class="hub-card">
+          <div class="hub-name">Fundraising Automation</div>
+          <ul class="hub-features">
+            <li>Funraisin → HubSpot real-time sync</li>
+            <li>Works alongside Raiser's Edge major giving</li>
+            <li>First-gift automated thank-you journey</li>
+            <li>Regular giving upgrade sequences</li>
+            <li>AI lapsed donor early detection</li>
+            <li>EOFY campaign full automation</li>
+            <li>Major donor task &amp; follow-up reminders</li>
+            <li>Peer-to-peer fundraising coaching</li>
+          </ul>
+        </div>
+        <div class="hub-card">
+          <div class="hub-name">Operations &amp; Reporting</div>
+          <ul class="hub-features">
+            <li>Live donor &amp; campaign dashboards</li>
+            <li>CTO-ready reporting — shareable link</li>
+            <li>Dynamics 365 two-way sync</li>
+            <li>AI contact deduplication &amp; enrichment</li>
+            <li>Media &amp; stakeholder contact management</li>
+            <li>Event registration &amp; post-event nurture</li>
+          </ul>
+        </div>
+        <div class="hub-card">
+          <div class="hub-name">Service Hub (future state)</div>
+          <ul class="hub-features">
+            <li>Helpline &amp; enquiry ticketing</li>
+            <li>Full contact history before every call</li>
+            <li>AI chatbot — 24/7 on dementia.org.au</li>
+            <li>Carer &amp; health professional knowledge base</li>
+            <li>Enquiry routing by program &amp; location</li>
+            <li>CSAT and team performance tracking</li>
+          </ul>
+        </div>
+        <div class="hub-card" style="background:linear-gradient(135deg,rgba(253,144,103,0.07),rgba(252,196,209,0.1));border-color:rgba(255,72,0,0.14);">
+          <div class="hub-name" style="background:var(--grad-energy);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Start Today — No Dependency</div>
+          <ul class="hub-features">
+            <li>Social media management — from day one</li>
+            <li>Email using Campaign Monitor contacts</li>
+            <li>AEO and content strategy in motion now</li>
+            <li>Connect Dynamics when architecture is ready</li>
+            <li>Connect Funraisin when architecture is ready</li>
+            <li>NFP pricing from the very first seat</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stack-section">
+  <div style="max-width:1060px;margin:0 auto;">
+    <div class="reveal" style="text-align:center;margin-bottom:48px;">
+      <span class="section-eyebrow">No Rip and Replace</span>
+      <h2 class="section-title">Your Current Stack, <em>Mapped</em></h2>
+      <p class="section-intro" style="margin:0 auto;">HubSpot doesn't ask you to throw anything away on day one. Some tools stay as the system of record, some connect, and some are gradually consolidated — on your timeline, alongside the data architecture project.</p>
+    </div>
+    <div class="stack-grid reveal">
+      <div class="stack-card">
+        <div class="stack-tool"><span style="font-size:18px;">🗂️</span><span class="stack-tool-name">Dynamics 365</span></div>
+        <div class="stack-role">CRM · system of record</div>
+        <div class="stack-status connect">Connect now, migrate later</div>
+        <div class="stack-desc">Stays as your system of record while HubSpot's two-way connector syncs contacts and activity. When the data architecture project completes, the migration path is already mapped.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-tool"><span style="font-size:18px;">💝</span><span class="stack-tool-name">Funraisin</span></div>
+        <div class="stack-role">Donation platform</div>
+        <div class="stack-status connect">Connect &amp; keep</div>
+        <div class="stack-desc">Keeps powering your donate and fundraising subdomains. Every gift syncs to HubSpot in real time, triggering automated donor journeys and feeding live reporting.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-tool"><span style="font-size:18px;">🎗️</span><span class="stack-tool-name">Raiser's Edge</span></div>
+        <div class="stack-role">Fundraising CRM</div>
+        <div class="stack-status connect">Integrate in sequence</div>
+        <div class="stack-desc">Your recently added fundraising CRM integrates as part of the broader data architecture sequencing — so major giving and marketing finally share one view of each supporter.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-tool"><span style="font-size:18px;">📨</span><span class="stack-tool-name">Campaign Monitor</span></div>
+        <div class="stack-role">Email comms</div>
+        <div class="stack-status connect">Connect now, optional consolidation</div>
+        <div class="stack-desc">Keep sending in Campaign Monitor and connect it to HubSpot for the contact feed — or consolidate fully when ready. Template migration tools make the move painless.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-tool"><span style="font-size:18px;">📭</span><span class="stack-tool-name">Mailchimp</span></div>
+        <div class="stack-role">Email comms (legacy)</div>
+        <div class="stack-status replace">Sunset in progress</div>
+        <div class="stack-desc">Already being retired in favour of a single email platform — exactly the consolidation your partners recommended as step one. HubSpot can be that single platform.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-tool"><span style="font-size:18px;">☎️</span><span class="stack-tool-name">CXone Helpline</span></div>
+        <div class="stack-role">Phone &amp; live chat</div>
+        <div class="stack-status keep">Keep · connect in future state</div>
+        <div class="stack-desc">Your helpline phone system and live chat stay in place. In a later phase, Service Hub connects them to the contact record so callers are known before they're greeted.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="aeo-section">
+  <div class="aeo-card reveal">
+    <div class="aeo-content">
+      <span class="aeo-badge">Standalone · Start Independently</span>
+      <h2 class="aeo-title">The <em>AEO</em> Product — Start Without Touching Your Data</h2>
+      <p class="aeo-desc">This is the one that landed at Grow. The AEO product is fully standalone and affordably priced — it doesn't require the data architecture work, doesn't need Dynamics or Funraisin connected, and works alongside your existing SEO consultant and content team. You can start here while everything else stays exactly as it is.</p>
+      <p class="aeo-desc">For the peak body for dementia in Australia, this is the difference between being found and being invisible. With 60% of searches ending without a click, your video, podcast and thought leadership content needs to be what AI tools cite — not just what sits on the site. AEO makes that measurable and actionable.</p>
+      <div class="aeo-pills">
+        <span class="aeo-pill">No data integration required</span>
+        <span class="aeo-pill">Works with your SEO consultant</span>
+        <span class="aeo-pill">Affordable standalone pricing</span>
+        <span class="aeo-pill">Start in weeks, not months</span>
+      </div>
+    </div>
+    <div class="aeo-visual">
+      <div class="aeo-stat-big">60%</div>
+      <div class="aeo-stat-label">of searches now end without a single click — AI answers before anyone reaches your content</div>
+      <div class="aeo-feature-row">See exactly where your content is and isn't being cited by AI tools</div>
+      <div class="aeo-feature-row">Identify the topics to own as the peak body authority</div>
+      <div class="aeo-feature-row">Optimise existing video, podcast and article content for AI discovery</div>
+      <div class="aeo-feature-row">Give the team a visible win while the broader roadmap progresses</div>
+    </div>
+  </div>
+</section>
+
+<section class="ai-section">
+  <div style="max-width:1060px;margin:0 auto;">
+    <div class="reveal" style="text-align:center;margin-bottom:48px;">
+      <span class="section-eyebrow">AI Built In</span>
+      <h2 class="section-title">Not a Chatbot. <em>A Mission Multiplier.</em></h2>
+      <p class="section-intro" style="margin:0 auto;">HubSpot's AI is embedded directly in every tool — not bolted on separately. It works from your contact data, your content and your donor history. The team does less manual work. The mission gets more reach.</p>
+    </div>
+    <div class="ai-grid reveal">
+      <div class="ai-card">
+        <div class="ai-card-header"><div class="ai-icon">🧠</div><div><div class="ai-card-title">Breeze AI — Content &amp; AEO</div><div class="ai-card-sub">Be the source AI tools cite — automatically</div></div></div>
+        <p class="ai-card-desc">As the peak body for dementia in Australia, Dementia Australia should be what ChatGPT, Gemini and Perplexity cite when someone asks about dementia support or NDSP. Breeze AI structures your content library to make that happen — and drafts new content that fills the gaps.</p>
+        <div class="ai-stats">
+          <div class="ai-stat"><div class="ai-stat-num">60%</div><div class="ai-stat-label">of searches don't result in a click anymore</div></div>
+          <div class="ai-stat"><div class="ai-stat-num">3×</div><div class="ai-stat-label">more content published per month with AI drafting</div></div>
+          <div class="ai-stat"><div class="ai-stat-num">2–3h</div><div class="ai-stat-label">saved per article with AI first drafts</div></div>
+        </div>
+        <ul class="ai-features">
+          <li>Identifies topics to write for AI-search dominance</li>
+          <li>Repurposes podcast &amp; video transcripts into articles</li>
+          <li>Drafts AEO-optimised blog posts from a brief</li>
+          <li>Analyses content gaps vs what carers are searching for</li>
+        </ul>
+      </div>
+      <div class="ai-card">
+        <div class="ai-card-header"><div class="ai-icon">💌</div><div><div class="ai-card-title">Breeze AI — Email &amp; Campaigns</div><div class="ai-card-sub">Every send, perfectly timed and personalised</div></div></div>
+        <p class="ai-card-desc">AI drafts your email copy and subject lines from a brief. It tests subject lines automatically and learns what resonates. It calculates the optimal send time for each individual contact — so your EOFY appeal arrives when that person is most likely to open it.</p>
+        <div class="ai-stats">
+          <div class="ai-stat"><div class="ai-stat-num">↑22%</div><div class="ai-stat-label">open rate improvement with AI send-time optimisation</div></div>
+          <div class="ai-stat"><div class="ai-stat-num">3–4h</div><div class="ai-stat-label">saved per campaign vs current manual process</div></div>
+          <div class="ai-stat"><div class="ai-stat-num">Auto</div><div class="ai-stat-label">A/B testing runs and learns without manual setup</div></div>
+        </div>
+        <ul class="ai-features">
+          <li>AI writes email drafts and subject lines from a prompt</li>
+          <li>Per-contact optimal send-time scheduling</li>
+          <li>Automatic A/B testing — learns over time</li>
+          <li>AI segments contacts by predicted giving behaviour</li>
+        </ul>
+      </div>
+      <div class="ai-card">
+        <div class="ai-card-header"><div class="ai-icon">❤️</div><div><div class="ai-card-title">Breeze AI — Donor Intelligence</div><div class="ai-card-sub">Never miss a lapsing donor again</div></div></div>
+        <p class="ai-card-desc">AI watches every donor's engagement pattern — email opens, website visits, donation frequency — and identifies who is trending towards lapse before they actually go. It launches a re-engagement sequence automatically. Your team only steps in when the AI has warmed them back up.</p>
+        <div class="ai-stats">
+          <div class="ai-stat"><div class="ai-stat-num">3mo</div><div class="ai-stat-label">earlier detection than manual monitoring</div></div>
+          <div class="ai-stat"><div class="ai-stat-num">Zero</div><div class="ai-stat-label">manual steps to trigger re-engagement</div></div>
+          <div class="ai-stat"><div class="ai-stat-num">Full</div><div class="ai-stat-label">context on every contact before outreach</div></div>
+        </div>
+        <ul class="ai-features">
+          <li>Predicts lapse risk from engagement trends</li>
+          <li>Auto-triggers re-engagement before lapse occurs</li>
+          <li>Surfaces major donor alerts to relationship managers</li>
+          <li>AI summarises full contact history before every call</li>
+        </ul>
+      </div>
+      <div class="ai-card">
+        <div class="ai-card-header"><div class="ai-icon">🤖</div><div><div class="ai-card-title">Breeze AI — Website Chatbot</div><div class="ai-card-sub">24/7 support trained on your own content</div></div></div>
+        <p class="ai-card-desc">Deploy a chatbot on dementia.org.au trained on your own knowledge base — accurate, on-brand, available around the clock. It answers common questions from carers and health professionals, captures contact details, and escalates to a human when needed.</p>
+        <div class="ai-stats">
+          <div class="ai-stat"><div class="ai-stat-num">24/7</div><div class="ai-stat-label">support without staffing costs</div></div>
+          <div class="ai-stat"><div class="ai-stat-num">On brand</div><div class="ai-stat-label">trained only on Dementia Australia content</div></div>
+          <div class="ai-stat"><div class="ai-stat-num">↓ vol</div><div class="ai-stat-label">reduces helpline common query volume</div></div>
+        </div>
+        <ul class="ai-features">
+          <li>Trained on Dementia Australia knowledge base — not generic AI</li>
+          <li>Captures contact details and creates CRM records automatically</li>
+          <li>Routes complex queries to the right human with full context</li>
+          <li>Learns from gaps — feeds ongoing knowledge base improvements</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="aud-section">
+  <div style="max-width:1060px;margin:0 auto;">
+    <div class="reveal" style="text-align:center;margin-bottom:48px;">
+      <span class="section-eyebrow">One Platform, Every Audience</span>
+      <h2 class="section-title">Built Around <em>All</em> Your Stakeholders</h2>
+      <p class="section-intro" style="margin:0 auto;">Your current website was built around NDSP funding personas — but you serve far more groups than that. HubSpot lets you build tailored content, journeys and segmentation for every audience, each on the same connected record.</p>
+    </div>
+    <div class="aud-grid reveal">
+      <div class="aud-card">
+        <div class="aud-icon">🧡</div>
+        <div class="aud-name">Carers &amp; families</div>
+        <div class="aud-desc">Welcome journeys, resource libraries and event invitations tailored to someone newly navigating a caring role — surfaced at exactly the right moment.</div>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon">💝</div>
+        <div class="aud-name">Donors &amp; supporters</div>
+        <div class="aud-desc">From first gift to regular giving to bequest — automated, personalised nurture that finally makes fundraising visible across the whole experience.</div>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon">🩺</div>
+        <div class="aud-name">Health professionals</div>
+        <div class="aud-desc">Targeted thought leadership and clinical resources, segmented and tracked, so you know which content reaches and resonates with the sector.</div>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon">🏛️</div>
+        <div class="aud-name">Government &amp; advocacy</div>
+        <div class="aud-desc">Stakeholder and media contact management in one place, with the engagement history that supports your advocacy and peak-body positioning.</div>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon">📣</div>
+        <div class="aud-name">Media &amp; thought leadership</div>
+        <div class="aud-desc">Your big media team's content — video, podcast, articles — organised, optimised for AI discovery and measured for real reach, not guesswork.</div>
+      </div>
+      <div class="aud-card">
+        <div class="aud-icon">🤝</div>
+        <div class="aud-name">Volunteers &amp; community</div>
+        <div class="aud-desc">Event registration, peer-to-peer fundraising and community engagement — every interaction captured and nurtured automatically.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="journey-section">
+  <div class="journey-wrap">
+    <div class="reveal">
+      <span class="section-eyebrow">End-to-End Journey</span>
+      <h2 class="section-title">From First Click<br>to <em>Bequest</em></h2>
+      <p class="section-intro" style="margin-bottom:36px;">Every step automated, every touchpoint personalised, every interaction captured on a single contact record. Built once. Runs forever.</p>
+      <div>
+        <div class="journey-step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Discovery — AI search surfaces your content <span class="step-ai-tag">AI</span></div>
+            <div class="step-desc">Someone asks ChatGPT about dementia support for carers. AEO-optimised content appears as the cited source. HubSpot tracking creates an anonymous visitor profile as they browse.</div>
+          </div>
+        </div>
+        <div class="journey-step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Conversion — they become a known contact</div>
+            <div class="step-desc">A carer downloads a guide. HubSpot creates a contact record, tags them as "carer — newly identified" and auto-enrols them in a 3-email welcome sequence. Zero manual action.</div>
+          </div>
+        </div>
+        <div class="journey-step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Engagement — lead score rises with every interaction <span class="step-ai-tag">AI</span></div>
+            <div class="step-desc">Email opens, webinar attendance and donation page visits raise their score. When they visit the donation page without converting, a task is created and a targeted email follows 48 hours later.</div>
+          </div>
+        </div>
+        <div class="journey-step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">First donation — Funraisin syncs in real time</div>
+            <div class="step-desc">They donate $150 via Funraisin. The connector updates HubSpot instantly. A personalised thank-you sequence launches. Their EOFY sequence is already scheduled for 6 months' time.</div>
+          </div>
+        </div>
+        <div class="journey-step">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <div class="step-title">Regular giving upgrade — triggered automatically <span class="step-ai-tag">AI</span></div>
+            <div class="step-desc">At 90 days, the regular giving upgrade sequence activates. They convert to $20/month. Every step logged on one contact record the whole team can see.</div>
+          </div>
+        </div>
+        <div class="journey-step">
+          <div class="step-num">6</div>
+          <div class="step-body">
+            <div class="step-title">Lifetime relationship — bequest and legacy giving</div>
+            <div class="step-desc">When they engage with bequest content, a task is created for a senior relationship manager. The full relationship — every interaction over every year — is on one record. Nothing is lost when staff change.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal" style="padding-top:60px;">
+      <h3 style="font-size:18px;font-weight:700;margin-bottom:22px;letter-spacing:-0.3px;">Time saved — for your team</h3>
+      <div class="time-saving-card">
+        <div class="ts-header"><span class="ts-icon">📧</span><div class="ts-title">Email campaigns</div></div>
+        <div class="ts-saving">3–4 hours saved</div>
+        <div class="ts-desc">No more exporting from Dynamics, importing to Campaign Monitor, manually pulling reports. Build the email, the list updates itself, AI times the send, the report is live.</div>
+      </div>
+      <div class="time-saving-card">
+        <div class="ts-header"><span class="ts-icon">💝</span><div class="ts-title">Donor follow-up</div></div>
+        <div class="ts-saving">Zero manual steps</div>
+        <div class="ts-desc">Funraisin syncs → workflow triggers → thank-you sent → task created for major donors. Nothing falls through because someone forgot to check a spreadsheet.</div>
+      </div>
+      <div class="time-saving-card">
+        <div class="ts-header"><span class="ts-icon">📊</span><div class="ts-title">Monthly leadership reporting</div></div>
+        <div class="ts-saving">Full day saved</div>
+        <div class="ts-desc">Live dashboard — share a link with Kimberly and the CTO. No more pulling data from four platforms and rebuilding a deck the night before a board meeting.</div>
+      </div>
+      <div class="time-saving-card">
+        <div class="ts-header"><span class="ts-icon">✍️</span><div class="ts-title">Content creation</div></div>
+        <div class="ts-saving">2–3 hours per article</div>
+        <div class="ts-desc">Brief the AI, get a structured AEO-optimised first draft in minutes. The team edits, approves and publishes. Editors and strategists — not blank-page writers.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="phases-section">
+  <div style="max-width:1060px;margin:0 auto;">
+    <div class="reveal" style="text-align:center;margin-bottom:48px;">
+      <span class="section-eyebrow">Getting There</span>
+      <h2 class="section-title">A Phased Approach — <em>Start Now,</em><br>Grow With Confidence</h2>
+      <p class="section-intro" style="margin:0 auto;">You don't need to wait 12–18 months for the data architecture project. The team can be using HubSpot — and getting real value from it — from day one.</p>
+    </div>
+    <div class="phases-grid reveal">
+      <div class="phase-card featured">
+        <div class="phase-tag now">Now — 0 to 3 months</div>
+        <div class="phase-title">Start with Marketing &amp; Content Hub</div>
+        <div class="phase-sub">No data architecture dependency. Plug in Campaign Monitor contacts and go. Give the team a platform to use and get excited about while the roadmap progresses.</div>
+        <ul class="phase-items">
+          <li>Social media management from day one</li>
+          <li>Email campaigns to existing contact lists</li>
+          <li>AEO and content strategy in motion</li>
+          <li>NFP pricing applies immediately</li>
+          <li>Implementation partner scoping begins</li>
+        </ul>
+      </div>
+      <div class="phase-card">
+        <div class="phase-tag">Phase 2 — 3 to 6 months</div>
+        <div class="phase-title">Connect Dynamics &amp; Funraisin</div>
+        <div class="phase-sub">With connectors live, HubSpot becomes the marketing layer on your existing CRM. Donation data flows in. Automation launches. Donors get journeys for the first time.</div>
+        <ul class="phase-items">
+          <li>Dynamics 365 two-way connector live</li>
+          <li>Funraisin donation sync active</li>
+          <li>Donor automation sequences launch</li>
+          <li>First unified contact view across all tools</li>
+          <li>Live fundraising &amp; campaign dashboards</li>
+        </ul>
+      </div>
+      <div class="phase-card">
+        <div class="phase-tag">Phase 3 — 6 to 18 months</div>
+        <div class="phase-title">Full CRM migration when ready</div>
+        <div class="phase-sub">As the Antares and Big Digital data architecture work concludes, the migration path is already mapped. Team is trained. Partners manage the transition.</div>
+        <ul class="phase-items">
+          <li>Dynamics fully migrated to HubSpot CRM</li>
+          <li>Service Hub for helpline management</li>
+          <li>AI chatbot live on dementia.org.au</li>
+          <li>Bequest and legacy giving journeys active</li>
+          <li>Full platform — owned in-house by the team</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="nfp-section" style="padding:100px 80px;">
+  <div class="nfp-inner">
+    <div class="nfp-content reveal">
+      <span class="section-eyebrow">Built for Organisations Like Yours</span>
+      <h2 class="section-title" style="color:white;margin-bottom:20px;">NFP Pricing <em>&amp; Partners</em></h2>
+      <p class="nfp-desc">HubSpot's NFP programme is built for mission-driven organisations — limited budgets, complex stakeholder environments, the need to do more with less. Our implementation partners in this space have done the fundraising integrations, legacy CRM migrations and phased transitions before. They're not starting from scratch for Dementia Australia.</p>
+      <p class="nfp-desc">Implementation costs are a fraction of what you'd see with Microsoft or Salesforce. And once the platform is set up, your team maintains it in-house — no ongoing partner on the payroll required, no complex system to manage.</p>
+      <div class="nfp-pills">
+        <span class="nfp-pill">NFP pricing available</span>
+        <span class="nfp-pill">Funraisin connector</span>
+        <span class="nfp-pill">Dynamics 365 connector</span>
+        <span class="nfp-pill">Campaign Monitor migration tools</span>
+        <span class="nfp-pill">NFP-specialist implementation partners</span>
+        <span class="nfp-pill">Dedicated ANZ account support</span>
+      </div>
+    </div>
+    <div class="nfp-stats reveal">
+      <div class="nfp-stat-card"><div class="nfp-stat-num">113%</div><div class="nfp-stat-label">Median ROI for HubSpot customers within 3 years<br><span style="font-size:10px;opacity:0.5;">Forrester TEI Study 2024</span></div></div>
+      <div class="nfp-stat-card"><div class="nfp-stat-num">4mo</div><div class="nfp-stat-label">Average payback period<br><span style="font-size:10px;opacity:0.5;">Forrester TEI Study 2024</span></div></div>
+      <div class="nfp-stat-card"><div class="nfp-stat-num">NFP</div><div class="nfp-stat-label">Significant discount for eligible not-for-profit organisations<br><span style="font-size:10px;opacity:0.5;">Ask Flavia for details</span></div></div>
+      <div class="nfp-stat-card"><div class="nfp-stat-num">1</div><div class="nfp-stat-label">Platform your team owns — no ongoing partner required after setup<br><span style="font-size:10px;opacity:0.5;">vs Microsoft &amp; Salesforce</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="bvc-section" id="bvc">
+  <div class="bvc-inner reveal">
+    <div class="bvc-card">
+      <div class="bvc-header">
+        <div class="bvc-icon-wrap">📈</div>
+        <div><div class="bvc-tag">Complimentary · No commitment</div><div class="bvc-title">Free Business Value Consultation</div></div>
+      </div>
+      <p class="bvc-desc">Before any commercial conversation, I'd love to set you up with HubSpot's Business Value team. This is a complimentary session where we model what moving away from your current stack would actually mean in real numbers — performance improvement, ROI, and total cost of ownership versus what Dementia Australia is spending today across Dynamics 365, Mailchimp, Campaign Monitor and Funraisin combined.</p>
+      <p class="bvc-desc">It's genuinely useful input for Kimberly's conversation with the CTO and for getting the roadmap approved at leadership level. We build the business case with you — not for you — using your data and your context. No sales pressure. No commitment. Just numbers your team can take into a room with confidence.</p>
+      <div class="bvc-pills">
+        <span class="bvc-pill">Total cost of ownership vs current stack</span>
+        <span class="bvc-pill">ROI modelling</span>
+        <span class="bvc-pill">Performance benchmarking</span>
+        <span class="bvc-pill">Phased cost planning</span>
+        <span class="bvc-pill">NFP pricing comparison</span>
+        <span class="bvc-pill">CTO-ready output document</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="steps-section">
+  <div style="max-width:860px;margin:0 auto;">
+    <div class="reveal" style="text-align:center;margin-bottom:44px;">
+      <span class="section-eyebrow">What Happens Next</span>
+      <h2 class="section-title" style="text-align:center;">The Ball Is in <em>Your Court</em></h2>
+      <p class="section-intro" style="margin:0 auto;">None of these require a commercial decision. Each one moves the conversation forward and gives your team more to work with.</p>
+    </div>
+    <div class="steps-grid reveal">
+      <div class="step-card"><div class="step-card-icon">🎯</div><div class="step-card-title">Send me your wishlist for the demo</div><div class="step-card-desc">Even just a rough bullet list of what matters most — fundraising, content discoverability, email, the Dynamics integration — and I'll build a tailored walkthrough. Can include your CTO and the Antares/Big Digital team.</div></div>
+      <div class="step-card"><div class="step-card-icon">🤝</div><div class="step-card-title">Implementation partner introductions</div><div class="step-card-desc">I'll send through profiles for two partners with deep NFP experience — fundraising integrations, legacy CRM migrations, phased approaches. No commitment. Just an early conversation to shape your requirements.</div></div>
+      <div class="step-card"><div class="step-card-icon">📊</div><div class="step-card-title">Book the Business Value Consultation</div><div class="step-card-desc">Complimentary ROI and TCO modelling from HubSpot's specialist team. Gives Kimberly and the CTO something concrete to evaluate — real numbers built on your actual spending, not a generic pitch deck.</div></div>
+      <div class="step-card"><div class="step-card-icon">🏗️</div><div class="step-card-title">Loop in the broader team</div><div class="step-card-desc">Happy to join a session with your CTO, Antares and Big Digital to walk through how HubSpot fits into the data architecture project — specifically how the sequencing works so everything moves forward together.</div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <span class="footer-name">Flavia Fontana</span>
+    <span class="footer-role">Enterprise Account Manager, ANZ · HubSpot</span>
+    <span class="footer-contact">ffontana@hubspot.com · 0475 133 389</span>
+  </div>
+  <div style="text-align:right;color:rgba(255,255,255,0.2);font-size:11px;">Prepared June 2026<br>HubSpot × Dementia Australia</div>
+</footer>
+
+<script>
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:0.08});
+reveals.forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>
